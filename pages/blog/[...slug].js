@@ -3,6 +3,7 @@ import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import Storyblok, { useStoryblok } from '../../lib/utils/storyblok-service'
 
 const DEFAULT_LAYOUT = 'PostLayout'
 
@@ -18,7 +19,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, preview = false }) {
   const allPosts = await getAllFilesFrontMatter('blog')
   const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
   const prev = allPosts[postIndex + 1] || null
@@ -31,15 +32,37 @@ export async function getStaticProps({ params }) {
   })
   const authorDetails = await Promise.all(authorPromise)
 
+  let slug = params.slug ? params.slug.join('/') : 'home'
+
+  let sbParams = {
+    version: 'draft', // or 'published'
+  }
+
+  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams)
+
+  // console.log(data)
+
   // rss
   const rss = generateRss(allPosts)
   fs.writeFileSync('./public/feed.xml', rss)
 
-  return { props: { post, authorDetails, prev, next } }
+  return {
+    props: {
+      post,
+      authorDetails,
+      prev,
+      next,
+      story: data ? data.story : null,
+      preview,
+    },
+    revalidate: 3600,
+  }
 }
 
-export default function Blog({ post, authorDetails, prev, next }) {
+export default function Blog({ post, authorDetails, prev, next, story, preview }) {
   const { mdxSource, toc, frontMatter } = post
+  const enableBridge = true
+  story = useStoryblok(story, enableBridge)
 
   return (
     <>
