@@ -38,9 +38,7 @@ export async function getStaticProps({ params, preview = false }) {
     version: 'draft', // or 'published'
   }
 
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams)
-
-  // console.log(data)
+  let { data } = await Storyblok.get(`cdn/stories/blog/${slug}`, sbParams)
 
   // rss
   const rss = generateRss(allPosts)

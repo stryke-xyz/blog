@@ -1,16 +1,9 @@
 ---
-name: Tails Azimuth
+name: Dopex Team
 avatar: /static/images/avatar.png
-occupation: Professor of Atmospheric Science
-company: Stanford University
-email: address@yoursite.com
 twitter: https://twitter.com/Twitter
-linkedin: https://www.linkedin.com
+discord: https://www.discord.com
 github: https://github.com
 ---
 
-Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His research interests includes complexity modelling of tailwinds, headwinds and crosswinds.
-
-He leads the clean energy group which develops 3D air pollution-climate models, writes differential equation solvers, and manufactures titanium plated air ballons. In his free time he bakes raspberry pi.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In tellus integer feugiat scelerisque varius morbi. Tortor pretium viverra suspendisse potenti nullam. Luctus accumsan tortor posuere ac. Turpis egestas maecenas pharetra convallis posuere morbi leo urna. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Nec ullamcorper sit amet risus nullam eget felis eget. Venenatis urna cursus eget nunc scelerisque viverra mauris in aliquam. Cras fermentum odio eu feugiat pretium. At augue eget arcu dictum varius duis at. Morbi tristique senectus et netus et malesuada fames. Sem fringilla ut morbi tincidunt augue interdum velit. Velit dignissim sodales ut eu sem integer vitae.

@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Dopex Blog',
   author: 'Dopex',
   headerTitle: 'Dopex Blog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'Dopex blog',
   language: 'en-us',
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
@@ -15,6 +15,7 @@ const siteMetadata = {
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',
+  discord: 'https://discord.com',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
