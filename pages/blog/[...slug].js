@@ -1,89 +1,56 @@
-import fs from 'fs'
-import PageTitle from '@/components/PageTitle'
-import generateRss from '@/lib/generate-rss'
-import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
-import Storyblok, { useStoryblok } from '../../lib/utils/storyblok-service'
+import ReactMarkdown from 'react-markdown'
 
-const DEFAULT_LAYOUT = 'PostLayout'
+import PageTitle from '@/components/PageTitle'
+import Storyblok from '../../lib/utils/storyblok-service'
 
 export async function getStaticPaths() {
-  const posts = getFiles('blog')
+  let { data } = await Storyblok.get('cdn/links/', {
+    starts_with: 'blog/',
+  })
   return {
-    paths: posts.map((p) => ({
+    paths: Object.values(data.links).map((p) => ({
       params: {
-        slug: formatSlug(p).split('/'),
+        slug: [p.slug.split('/')[1]], // blog/article-# --> ['blog','article-#'] --> ['article-#']
       },
     })),
-    fallback: false,
+    fallback: true,
   }
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const allPosts = await getAllFilesFrontMatter('blog')
-  const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
-  const prev = allPosts[postIndex + 1] || null
-  const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug('blog', params.slug.join('/'))
-  const authorList = post.frontMatter.authors || ['default']
-  const authorPromise = authorList.map(async (author) => {
-    const authorResults = await getFileBySlug('authors', [author])
-    return authorResults.frontMatter
-  })
-  const authorDetails = await Promise.all(authorPromise)
-
   let slug = params.slug ? params.slug.join('/') : 'home'
 
   let sbParams = {
     version: 'draft', // or 'published'
   }
 
-  let { data } = await Storyblok.get(`cdn/stories/blog/${slug}`, sbParams)
-
-  // rss
-  const rss = generateRss(allPosts)
-  fs.writeFileSync('./public/feed.xml', rss)
+  const { data } = await Storyblok.get(`cdn/stories/blog/${slug}`, sbParams)
 
   return {
     props: {
-      post,
-      authorDetails,
-      prev,
-      next,
-      story: data ? data.story : null,
+      post: data ? data.story : null,
       preview,
     },
     revalidate: 3600,
   }
 }
 
-export default function Blog({ post, authorDetails, prev, next, story, preview }) {
-  const { mdxSource, toc, frontMatter } = post
-  const enableBridge = true
-  story = useStoryblok(story, enableBridge)
-
+export default function Blog({ post }) {
+  console.log(post.content.markdown)
   return (
     <>
-      {frontMatter.draft !== true ? (
-        <MDXLayoutRenderer
-          layout={frontMatter.layout || DEFAULT_LAYOUT}
-          toc={toc}
-          mdxSource={mdxSource}
-          frontMatter={frontMatter}
-          authorDetails={authorDetails}
-          prev={prev}
-          next={next}
-        />
-      ) : (
-        <div className="mt-24 text-center">
-          <PageTitle>
-            Under Construction{' '}
-            <span role="img" aria-label="roadwork sign">
-              🚧
-            </span>
-          </PageTitle>
+      {/* Add blog article template to render markdown */}
+      <div className="mt-24 text-center">
+        <PageTitle>
+          Under Construction{' '}
+          <span role="img" aria-label="roadwork sign">
+            🚧
+          </span>
+        </PageTitle>
+        <div className="text-white">
+          <ReactMarkdown source={post?.content.markdown} />
         </div>
-      )}
+      </div>
     </>
   )
 }

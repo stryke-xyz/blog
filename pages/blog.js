@@ -16,17 +16,21 @@ export async function getStaticProps(context) {
     params.cv = Date.now()
   }
 
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, params)
+  let { data } = await Storyblok.get(`cdn/stories/`, {
+    per_page: 5,
+    page: 1,
+    starts_with: 'blog/',
+  })
 
-  const initialDisplayPosts = data?.story.content.body.slice(0, POSTS_PER_PAGE)
+  const initialDisplayPosts = data?.stories.slice(0, POSTS_PER_PAGE)
   const pagination = {
     currentPage: 1,
-    totalPages: Math.ceil(data.story.content.body?.length / POSTS_PER_PAGE),
+    totalPages: Math.ceil(data.stories?.length / POSTS_PER_PAGE),
   }
 
   return {
     props: {
-      posts: data ? data.story : false,
+      posts: data ? data.stories : false,
       initialDisplayPosts,
       pagination,
       data,
@@ -39,7 +43,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
     <>
       <PageSEO title={`Blog - ${siteMetadata.author}`} description={siteMetadata.description} />
       <ListLayout
-        posts={posts.content.body}
+        posts={posts}
         initialDisplayPosts={initialDisplayPosts}
         pagination={pagination}
         title="All Posts"
