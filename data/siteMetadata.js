@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Dopex Blog',
   author: 'Dopex',
   headerTitle: 'Dopex Blog',
-  description: 'Dopex blog',
+  description: 'Dopex Blog',
   language: 'en-us',
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',

@@ -1,4 +1,5 @@
-import ReactMarkdown from 'react-markdown'
+import { ReactMarkdown } from 'react-markdown'
+import * as Showdown from 'showdown'
 
 import PageTitle from '@/components/PageTitle'
 import Storyblok from '../../lib/utils/storyblok-service'
@@ -36,7 +37,11 @@ export async function getStaticProps({ params, preview = false }) {
 }
 
 export default function Blog({ post }) {
-  console.log(post.content.markdown)
+  const converter = new Showdown.Converter()
+  const html = converter.makeHtml(post?.content.markdown)
+
+  console.log(html)
+
   return (
     <>
       {/* Add blog article template to render markdown */}
@@ -47,9 +52,8 @@ export default function Blog({ post }) {
             🚧
           </span>
         </PageTitle>
-        <div className="text-white">
-          <ReactMarkdown source={post?.content.markdown} />
-        </div>
+        {/* <div dangerouslySetInnerHTML={{ _html: converter.makeHtml(post?.content.markdown) }} /> */}
+        {/* <ReactMarkdown source={converter.makeHtml(post?.content.markdown)} /> */}
       </div>
     </>
   )
