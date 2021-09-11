@@ -5,12 +5,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/static/favicons/favicon-32x32.png"
-          />
+          <link rel="icon" type="image/x-icon" sizes="32x32" href="/static/favicons/favicon.ico" />
           <link
             rel="icon"
             type="image/png"
@@ -34,7 +29,7 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
           />
         </Head>
-        <body className="antialiased text-black bg-white dark:bg-gray-900 dark:text-white">
+        <body className="antialiased text-black bg-white-dark dark:bg-black dark:text-white">
           <Main />
           <NextScript />
         </body>
