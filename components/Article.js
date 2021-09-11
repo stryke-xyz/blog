@@ -61,7 +61,7 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
       </ReactMarkdown>
       <hr className="border-gray-300 dark:border-gray-700" />
       <Link href={'/blog'}>
-        <span className="self-center text-xl text-primary hover:text-primary-light cursor-pointer">
+        <span className="self-center text-xl text-primary hover:text-vaporwave-blue cursor-pointer">
           &larr; Back to Blog
         </span>
       </Link>

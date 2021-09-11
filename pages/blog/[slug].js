@@ -53,7 +53,7 @@ export default function Blog({ post }) {
               </span>
             </PageTitle>
             <Link href={'/blog'}>
-              <p className="text-center text-primary dark:text-wave-blue hover:text-primary-light cursor-pointer">
+              <p className="text-center text-primary dark:text-vaporwave-blue hover:text-vaporwave-blue cursor-pointer">
                 &larr; Go Back{' '}
               </p>
             </Link>
