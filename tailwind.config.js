@@ -21,9 +21,10 @@ module.exports = {
       },
       colors: {
         primary: '#002EFF',
-        'primary-light': '#8AACF4',
+        'wave-blue': '#8AACF4',
         'white-dark': '#F6F9FF',
-        'wave-blue': '#22E1FF',
+        'black-light': '#161B22',
+        stieglitz: '#6176A1',
         gray: colors.trueGray,
         code: {
           green: '#b5f4a5',

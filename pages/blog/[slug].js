@@ -43,7 +43,7 @@ export default function Blog({ post }) {
 
   return (
     <>
-      <div className="mt-24">
+      <div className="mt-24 w-5/6 mx-auto">
         {post.content.draft ? (
           <>
             <PageTitle>
@@ -53,7 +53,7 @@ export default function Blog({ post }) {
               </span>
             </PageTitle>
             <Link href={'/blog'}>
-              <p className="text-center text-primary dark:text-wave-blue hover:text-primary-light cursor-pointer">
+              <p className="text-center text-primary dark:text-wave-blue hover:text-wave-blue cursor-pointer">
                 &larr; Go Back{' '}
               </p>
             </Link>

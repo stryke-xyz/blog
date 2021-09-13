@@ -33,12 +33,6 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
         {tag_list.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
-        <img
-          src={author.url}
-          className="w-10 h-10 bg-white rounded-full mx-auto"
-          alt="user"
-          layout="fill"
-        />
       </div>
       <img src={image} className="mx-auto my-4" alt="cover" layout="fill" />
       <ReactMarkdown
@@ -59,9 +53,9 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
       >
         {markdown}
       </ReactMarkdown>
-      <hr className="border-gray-300 dark:border-gray-700" />
+      <hr className="border-gray-300 dark:border-gray-700 my-5" />
       <Link href={'/blog'}>
-        <span className="self-center text-xl text-primary hover:text-primary-light cursor-pointer">
+        <span className="self-center text-xl text-wave-blue hover:text-blue-300 cursor-pointer">
           &larr; Back to Blog
         </span>
       </Link>

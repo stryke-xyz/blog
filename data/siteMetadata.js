@@ -1,25 +1,22 @@
 const siteMetadata = {
   title: 'Dopex Blog',
   author: 'Dopex',
-  headerTitle: 'Blog',
+  headerTitle: 'BLOG',
   description: 'The Official Decentralized Options Exchange (Dopex) Blog',
   language: 'en-us',
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: '###',
+  siteRepo: '###',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
   github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
+  twitter: 'https://twitter.com/dopex_io',
   linkedin: 'https://www.linkedin.com',
   discord: 'https://discord.com',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
-    plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
+    plausibleDataDomain: '', // e.g. blog.vercel.app
     simpleAnalytics: false, // true or false
     googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
   },
