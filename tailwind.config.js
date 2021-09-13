@@ -22,7 +22,6 @@ module.exports = {
       colors: {
         primary: '#002EFF',
         'wave-blue': '#8AACF4',
-        'vaporwave-blue': '#22E1FF',
         'white-dark': '#F6F9FF',
         'black-light': '#161B22',
         stieglitz: '#6176A1',
