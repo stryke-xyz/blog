@@ -55,22 +55,17 @@ export default function Home({ stories }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!sortedStories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
-            const { title, summary } = frontMatter.content
+            const { title, summary, image } = frontMatter.content
             const { slug, tag_list, published_at } = frontMatter
             return (
-              <li key={index} className="py-12">
+              <li key={index} className="py-6">
                 <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
-                    <dl>
-                      <dt className="sr-only">Published on</dt>
-                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <time dateTime={published_at}>{formatDate(published_at)}</time>
-                      </dd>
-                    </dl>
-                    <div className="space-y-5 xl:col-span-3">
-                      <div className="space-y-6">
+                  <div className="space-y-2 xl:grid xl:grid-cols-6 gap-3 xl:space-y-0">
+                    <img src={image} className="sm:w-full rounded-md col-span-2" />
+                    <div className="space-y-5 xl:col-span-4">
+                      <div className="space-y-1">
                         <div>
-                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                          <h2 className="text-2xl font-bold">
                             <Link
                               href={`/blog/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
@@ -78,17 +73,23 @@ export default function Home({ stories }) {
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
-                            {tag_list.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
-                          </div>
+                          <dl>
+                            <dt className="sr-only">Published on</dt>
+                            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                              <time dateTime={published_at}>{formatDate(published_at)}</time>
+                            </dd>
+                          </dl>
                         </div>
                         <div className="prose text-gray-500 max-w-none dark:text-gray-400">
                           {summary}
                         </div>
+                        <div className="flex flex-wrap">
+                          {tag_list.map((tag) => (
+                            <Tag key={tag} text={tag} />
+                          ))}
+                        </div>
                       </div>
-                      <div className="text-base font-medium leading-6">
+                      <div className="text-base font-medium leading-6 place-self-end">
                         <Link
                           href={`/blog/${slug}`}
                           className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
