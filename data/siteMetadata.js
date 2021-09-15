@@ -4,7 +4,7 @@ const siteMetadata = {
   headerTitle: 'BLOG',
   description: 'The Official Decentralized Options Exchange (Dopex) Blog',
   language: 'en-us',
-  siteUrl: '###',
+  siteUrl: 'https://blog-bj2d0m97k-dopex.vercel.app/',
   siteRepo: '###',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
