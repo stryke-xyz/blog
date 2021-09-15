@@ -5,12 +5,14 @@ import kebabCase from '@/lib/utils/kebabCase'
 import Storyblok from '@/lib/utils/storyblok-service'
 
 export async function getStaticPaths() {
-  let { data } = await Storyblok.get('cdn/tags/')
+  let { data } = await Storyblok.get('cdn/tags/', {
+    starts_with: 'blog/',
+  })
 
   return {
     paths: data.tags.map((tag) => ({
       params: {
-        tag: tag.name,
+        tag: kebabCase(tag.name),
       },
     })),
     fallback: false,
