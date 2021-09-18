@@ -1,8 +1,11 @@
+import { useState } from 'react'
+
+import formatDate from '@/lib/utils/formatDate'
+import trimmedSummary from '@/lib/utils/trimmedSummary'
+
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import { useState } from 'react'
 import Pagination from '@/components/Pagination'
-import formatDate from '@/lib/utils/formatDate'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const [searchValue, setSearchValue] = useState('')
@@ -80,7 +83,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                       </div>
                     </div>
                     <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                      {summary}
+                      {trimmedSummary(summary)}
                     </div>
                   </div>
                 </article>

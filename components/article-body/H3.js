@@ -1,7 +1,7 @@
 import React from 'react'
 
 const H3 = ({ children }) => {
-  return <h3 className="text-2xl font-semibold">{children}</h3>
+  return <h2 className="text-2xl font-serif font-semibold py-2">{children}</h2>
 }
 
 export default H3

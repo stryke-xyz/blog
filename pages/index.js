@@ -1,9 +1,11 @@
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
-import Tag from '@/components/Tag'
+
 import siteMetadata from '@/data/siteMetadata'
+
 import formatDate from '@/lib/utils/formatDate'
-import Storyblok from '../lib/utils/storyblok-service'
+import trimmedSummary from '@/lib/utils/trimmedSummary'
+import Storyblok from '@/lib/utils/storyblok-service'
 
 const MAX_DISPLAY = 5
 
@@ -56,7 +58,7 @@ export default function Home({ stories }) {
           {!sortedStories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
             const { title, summary, image } = frontMatter.content
-            const { slug, tag_list, published_at } = frontMatter
+            const { slug, /*tag_list,*/ published_at } = frontMatter
             return (
               <li key={index} className="py-6">
                 <article>
@@ -81,22 +83,17 @@ export default function Home({ stories }) {
                           </dl>
                         </div>
                         <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                          {summary}
+                          {trimmedSummary(summary)}
                         </div>
-                        <div className="flex flex-wrap">
-                          {tag_list.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))}
+                        <div className="text-base font-medium leading-6 place-self-end">
+                          <Link
+                            href={`/blog/${slug}`}
+                            className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
+                            aria-label={`Read "${title}"`}
+                          >
+                            Read more &rarr;
+                          </Link>
                         </div>
-                      </div>
-                      <div className="text-base font-medium leading-6 place-self-end">
-                        <Link
-                          href={`/blog/${slug}`}
-                          className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
-                          aria-label={`Read "${title}"`}
-                        >
-                          Read more &rarr;
-                        </Link>
                       </div>
                     </div>
                   </div>
