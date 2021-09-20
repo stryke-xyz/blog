@@ -17,6 +17,7 @@ import Tag from '@/components/Tag'
 import Anchor from '@/components/article-body/Anchor'
 import UL from '@/components/article-body/UL'
 import OL from '@/components/article-body/OL'
+import LI from '@/components/article-body/LI'
 import Code from '@/components/article-body/Code'
 import Table from '@/components/article-body/Table'
 import Blockquote from '@/components/article-body/Blockquote'
@@ -49,7 +50,7 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
           h6: H6,
           ul: UL,
           ol: OL,
-          li: ({ children }) => <li className="py-2">{children}</li>,
+          li: LI,
           code: Code,
           blockquote: Blockquote,
           table: Table,
