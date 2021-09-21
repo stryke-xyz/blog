@@ -43,7 +43,7 @@ export default function Blog({ post }) {
 
   return (
     <>
-      <div className="mt-24 w-5/6 mx-auto">
+      <div className="mt-24 mx-auto">
         {post.content.draft ? (
           <>
             <PageTitle>

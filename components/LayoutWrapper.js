@@ -10,8 +10,8 @@ import ThemeSwitch from './ThemeSwitch'
 const LayoutWrapper = ({ children }) => {
   return (
     <SectionContainer>
-      <div className="flex flex-col justify-between h-screen">
-        <header className="flex items-center justify-between py-5 w-4/5 mx-auto">
+      <div className="flex flex-col justify-between h-screen w-11/12 mx-auto">
+        <header className="flex items-center justify-between py-5">
           <div>
             <Link href="/" aria-label="Dopex Blog">
               <div className="flex items-center justify-between">
@@ -44,7 +44,7 @@ const LayoutWrapper = ({ children }) => {
             <MobileNav />
           </div>
         </header>
-        <main className="mb-auto w-4/5 mx-auto">{children}</main>
+        <main className="mb-auto">{children}</main>
         <Footer />
       </div>
     </SectionContainer>

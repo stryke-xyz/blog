@@ -26,12 +26,12 @@ import Image from '@/components/article-body/Image'
 
 export default function ArticleBody({ title, date, image, author, markdown, tag_list }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mx-auto">
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
       <div className="text-center space-y-4">
-        <h2 className="text-end text-gray-400">{formatDate(date)}</h2>
+        <h2 className="text-end text-stieglitz">{formatDate(date)}</h2>
         <hr className="border-gray-300 dark:border-gray-700"></hr>
-        <h1 className="text-3xl font-serif font-normal leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+        <h1 className="text-3xl font-extrabold uppercase leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
           {title}
         </h1>
         {tag_list.map((tag, index) => (
@@ -63,7 +63,7 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
       </ReactMarkdown>
       <hr className="border-gray-300 dark:border-gray-700 py-2" />
       <Link href={'/blog'}>
-        <span className="self-center text-xl text-primary dark:text-wave-blue cursor-pointer">
+        <span className="self-center xs:text-md lg:text-lg text-primary dark:text-wave-blue cursor-pointer">
           &larr; Back to Blog
         </span>
       </Link>

@@ -50,7 +50,7 @@ export default function Home({ stories }) {
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
             {siteMetadata.description}
           </p>
         </div>
@@ -77,12 +77,12 @@ export default function Home({ stories }) {
                           </h2>
                           <dl>
                             <dt className="sr-only">Published on</dt>
-                            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                            <dd className="text-base font-medium leading-6 text-stieglitz dark:text-gray-400">
                               <time dateTime={published_at}>{formatDate(published_at)}</time>
                             </dd>
                           </dl>
                         </div>
-                        <div className="prose text-gray-500 max-w-none dark:text-gray-400">
+                        <div className="prose text-stieglitz max-w-none dark:text-gray-400">
                           {trimmedSummary(summary)}
                         </div>
                         <div className="text-base font-medium leading-6 place-self-end">
