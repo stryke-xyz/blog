@@ -1,13 +1,14 @@
 import { TagSEO } from '@/components/SEO'
-import siteMetadata from '@/data/siteMetadata'
+
 import ListLayout from '@/layouts/ListLayout'
+
 import kebabCase from '@/lib/utils/kebabCase'
 import Storyblok from '@/lib/utils/storyblok-service'
 
+import siteMetadata from '@/data/siteMetadata'
+
 export async function getStaticPaths() {
-  let { data } = await Storyblok.get('cdn/tags/', {
-    starts_with: 'blog/',
-  })
+  let { data } = await Storyblok.get('cdn/tags/')
 
   return {
     paths: data.tags.map((tag) => ({

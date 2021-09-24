@@ -1,9 +1,11 @@
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
-import Tag from '@/components/Tag'
+
 import siteMetadata from '@/data/siteMetadata'
+
 import formatDate from '@/lib/utils/formatDate'
-import Storyblok from '../lib/utils/storyblok-service'
+import trimmedSummary from '@/lib/utils/trimmedSummary'
+import Storyblok from '@/lib/utils/storyblok-service'
 
 const MAX_DISPLAY = 5
 
@@ -48,29 +50,24 @@ export default function Home({ stories }) {
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
             {siteMetadata.description}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!sortedStories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
-            const { title, summary } = frontMatter.content
-            const { slug, tag_list, published_at } = frontMatter
+            const { title, summary, image } = frontMatter.content
+            const { slug, /*tag_list,*/ published_at } = frontMatter
             return (
-              <li key={index} className="py-12">
+              <li key={index} className="py-6">
                 <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
-                    <dl>
-                      <dt className="sr-only">Published on</dt>
-                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <time dateTime={published_at}>{formatDate(published_at)}</time>
-                      </dd>
-                    </dl>
-                    <div className="space-y-5 xl:col-span-3">
-                      <div className="space-y-6">
+                  <div className="space-y-2 xl:grid xl:grid-cols-6 gap-3 xl:space-y-0">
+                    <img src={image} className="sm:w-full rounded-md col-span-2" />
+                    <div className="space-y-5 xl:col-span-4">
+                      <div className="space-y-1">
                         <div>
-                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                          <h2 className="text-2xl font-bold">
                             <Link
                               href={`/blog/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
@@ -78,24 +75,25 @@ export default function Home({ stories }) {
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
-                            {tag_list.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
-                          </div>
+                          <dl>
+                            <dt className="sr-only">Published on</dt>
+                            <dd className="text-base font-medium leading-6 text-stieglitz dark:text-gray-400">
+                              <time dateTime={published_at}>{formatDate(published_at)}</time>
+                            </dd>
+                          </dl>
                         </div>
-                        <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                          {summary}
+                        <div className="prose text-stieglitz max-w-none dark:text-gray-400">
+                          {trimmedSummary(summary)}
                         </div>
-                      </div>
-                      <div className="text-base font-medium leading-6">
-                        <Link
-                          href={`/blog/${slug}`}
-                          className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
-                          aria-label={`Read "${title}"`}
-                        >
-                          Read more &rarr;
-                        </Link>
+                        <div className="text-base font-medium leading-6 place-self-end">
+                          <Link
+                            href={`/blog/${slug}`}
+                            className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
+                            aria-label={`Read "${title}"`}
+                          >
+                            Read more &rarr;
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

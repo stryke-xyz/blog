@@ -10,7 +10,7 @@ import ThemeSwitch from './ThemeSwitch'
 const LayoutWrapper = ({ children }) => {
   return (
     <SectionContainer>
-      <div className="flex flex-col justify-between h-screen">
+      <div className="flex flex-col justify-between h-screen w-11/12 mx-auto">
         <header className="flex items-center justify-between py-5">
           <div>
             <Link href="/" aria-label="Dopex Blog">

@@ -17,7 +17,9 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['Ilisarniq'],
+        serif: ['Ilisarniq'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         primary: '#002EFF',

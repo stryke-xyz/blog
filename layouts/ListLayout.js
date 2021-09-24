@@ -1,8 +1,11 @@
+import { useState } from 'react'
+
+import formatDate from '@/lib/utils/formatDate'
+import trimmedSummary from '@/lib/utils/trimmedSummary'
+
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import { useState } from 'react'
 import Pagination from '@/components/Pagination'
-import formatDate from '@/lib/utils/formatDate'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const [searchValue, setSearchValue] = useState('')
@@ -68,7 +71,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>
-                      <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                      <h3 className="text-2xl font-semibold leading-8 tracking-tight">
                         <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
                           {title}
                         </Link>
@@ -79,8 +82,8 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                         ))}
                       </div>
                     </div>
-                    <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                      {summary}
+                    <div className="prose text-stieglitz max-w-none dark:text-gray-400">
+                      {trimmedSummary(summary)}
                     </div>
                   </div>
                 </article>
