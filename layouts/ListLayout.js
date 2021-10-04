@@ -59,9 +59,9 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
 
           {displayPosts.map((frontMatter) => {
             const { title, summary } = frontMatter.content
-            const { slug, published_at, tag_list } = frontMatter
+            const { full_slug, published_at, tag_list } = frontMatter
             return (
-              <li key={slug} className="py-4">
+              <li key={full_slug} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
                   <dl>
                     <dt className="sr-only">Published on</dt>
@@ -72,7 +72,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <h3 className="text-2xl font-semibold leading-8 tracking-tight">
-                        <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
+                        <Link href={`/${full_slug}`} className="text-gray-900 dark:text-gray-100">
                           {title}
                         </Link>
                       </h3>

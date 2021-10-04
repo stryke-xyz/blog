@@ -58,7 +58,7 @@ export default function Home({ stories }) {
           {!sortedStories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
             const { title, summary, image } = frontMatter.content
-            const { slug, /*tag_list,*/ published_at } = frontMatter
+            const { full_slug, /*tag_list,*/ published_at } = frontMatter
             return (
               <li key={index} className="py-6">
                 <article>
@@ -69,7 +69,7 @@ export default function Home({ stories }) {
                         <div>
                           <h2 className="text-2xl font-bold">
                             <Link
-                              href={`/blog/${slug}`}
+                              href={`/${full_slug}`}
                               className="text-gray-900 dark:text-gray-100"
                             >
                               {title}
@@ -87,7 +87,7 @@ export default function Home({ stories }) {
                         </div>
                         <div className="text-base font-medium leading-6 place-self-end">
                           <Link
-                            href={`/blog/${slug}`}
+                            href={`/${full_slug}`}
                             className="text-primary dark:text-wave-blue dark:hover:text-blue-300"
                             aria-label={`Read "${title}"`}
                           >

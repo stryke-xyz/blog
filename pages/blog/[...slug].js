@@ -10,27 +10,30 @@ export async function getStaticPaths() {
   })
 
   return {
-    paths: Object.values(data.links).map((p) => ({
-      params: {
-        slug: p.slug.split('/')[1].toString(),
-      },
-    })),
+    paths: Object.values(data.links)
+      .filter((p) => p.path)
+      .map((p) => ({
+        params: {
+          slug: p.slug?.split(/\/|,/).slice(1),
+        },
+      })),
     fallback: false,
   }
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  let slug = (await params.slug) ? params.slug : 'home'
+  console.log('\nGet Static Props: ', params.slug.join('/'))
+  let slug = (await params.slug) ? params.slug.join('/') : 'home'
 
   let sbParams = {
     version: 'published', // or 'draft'
   }
 
-  const { data } = await Storyblok.get(`cdn/stories/blog/${slug}`, sbParams)
+  const { data } = await Storyblok.get(`cdn/stories/blog/${[slug]}`, sbParams)
 
   return {
     props: {
-      post: (await data) ? data.story : null,
+      post: (await data) ? data?.story : null,
       //author,
       preview,
     },
@@ -52,7 +55,7 @@ export default function Blog({ post }) {
                 🚧
               </span>
             </PageTitle>
-            <Link href={'/blog'}>
+            <Link passHref={'/blog'}>
               <p className="text-center text-primary dark:text-wave-blue hover:text-wave-blue cursor-pointer">
                 &larr; Go Back{' '}
               </p>
