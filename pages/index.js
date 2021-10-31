@@ -106,7 +106,7 @@ export default function Home({ stories }) {
       {sortedStories.length > MAX_DISPLAY && (
         <div className="flex justify-end text-base font-medium leading-6">
           <Link
-            href="/blog"
+            href="/articles"
             className="text-blue-500 hover:text-blue-600 dark:hover:text-primary"
             aria-label="all posts"
           >

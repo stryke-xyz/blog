@@ -62,7 +62,7 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
         {markdown}
       </ReactMarkdown>
       <hr className="border-gray-300 dark:border-gray-700 py-2" />
-      <Link href={'/blog'}>
+      <Link href={'/articles'}>
         <span className="self-center xs:text-md lg:text-lg text-primary dark:text-wave-blue cursor-pointer">
           &larr; Back to Blog
         </span>
