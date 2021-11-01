@@ -22,7 +22,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  console.log('\nGet Static Props: ', params.slug.join('/'))
   let slug = (await params.slug) ? params.slug.join('/') : 'home'
 
   let sbParams = {
@@ -55,7 +54,7 @@ export default function Blog({ post }) {
                 🚧
               </span>
             </PageTitle>
-            <Link passHref={'/blog'}>
+            <Link passHref={'/'}>
               <p className="text-center text-primary dark:text-wave-blue hover:text-wave-blue cursor-pointer">
                 &larr; Go Back{' '}
               </p>
