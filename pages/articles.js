@@ -54,7 +54,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
         )
       }
     },
-    [pagination, posts, listOfPosts]
+    [pagination, posts]
   )
 
   const handlePrevPage = useCallback(
@@ -69,7 +69,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
         )
       }
     },
-    [pagination, posts, listOfPosts]
+    [pagination, posts]
   )
 
   return (
