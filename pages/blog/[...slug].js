@@ -63,7 +63,7 @@ export default function Blog({ post }) {
         ) : (
           <Article
             title={title}
-            date={post.published_at}
+            date={post.first_published_at}
             image={image}
             author={author}
             markdown={markdown}
