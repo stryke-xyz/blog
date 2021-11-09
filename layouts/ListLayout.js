@@ -66,14 +66,14 @@ export default function ListLayout({
 
           {displayPosts.map((frontMatter) => {
             const { title, summary } = frontMatter.content
-            const { full_slug, published_at, tag_list } = frontMatter
+            const { full_slug, first_published_at, tag_list } = frontMatter
             return (
               <li key={full_slug} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={published_at}>{formatDate(published_at)}</time>
+                      <time dateTime={first_published_at}>{formatDate(first_published_at)}</time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
