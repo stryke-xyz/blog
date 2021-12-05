@@ -39,7 +39,7 @@ export default function Home({ stories }) {
   const sortedStories = stories
     .slice(0, MAX_DISPLAY)
     .map((frontMatter) => frontMatter)
-    .sort((item1, item2) => new Date(item2.published_at) - new Date(item1.published_at))
+    .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
 
   return (
     <>
@@ -58,7 +58,7 @@ export default function Home({ stories }) {
           {!sortedStories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
             const { title, summary, image } = frontMatter.content
-            const { full_slug, /*tag_list,*/ published_at } = frontMatter
+            const { full_slug, /*tag_list,*/ first_published_at } = frontMatter
             return (
               <li key={index} className="py-6">
                 <article>
@@ -78,7 +78,9 @@ export default function Home({ stories }) {
                           <dl>
                             <dt className="sr-only">Published on</dt>
                             <dd className="text-base font-medium leading-6 text-stieglitz dark:text-gray-400">
-                              <time dateTime={published_at}>{formatDate(published_at)}</time>
+                              <time dateTime={first_published_at}>
+                                {formatDate(first_published_at)}
+                              </time>
                             </dd>
                           </dl>
                         </div>
