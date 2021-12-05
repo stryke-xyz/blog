@@ -27,11 +27,15 @@ export async function getStaticProps(context) {
     totalPages: Math.ceil(data.stories?.length / POSTS_PER_PAGE),
   }
 
-  const initialDisplayPosts = data?.stories.slice(0, POSTS_PER_PAGE * pagination.currentPage)
+  const sortedStories = data?.stories
+    .map((frontMatter) => frontMatter)
+    .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
+
+  const initialDisplayPosts = sortedStories.slice(0, POSTS_PER_PAGE * pagination.currentPage)
 
   return {
     props: {
-      posts: data ? data.stories : false,
+      posts: data ? sortedStories : [],
       initialDisplayPosts,
       pagination,
       data,
