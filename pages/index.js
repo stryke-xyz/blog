@@ -20,14 +20,17 @@ export async function getStaticProps(context) {
   }
 
   let { data } = await Storyblok.get(`cdn/stories/`, {
-    per_page: 5,
     page: 1,
     starts_with: 'blog/',
   })
 
+  const sortedStories = data?.stories
+    .map((frontMatter) => frontMatter)
+    .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
+
   return {
     props: {
-      stories: data ? data.stories : false,
+      stories: data ? sortedStories : false,
       preview: context.preview || false,
       data,
     },
@@ -55,7 +58,7 @@ export default function Home({ stories }) {
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!sortedStories.length && 'No posts found.'}
+          {!stories.length && 'No posts found.'}
           {sortedStories.map((frontMatter, index) => {
             const { title, summary, image } = frontMatter.content
             const { full_slug, /*tag_list,*/ first_published_at } = frontMatter
