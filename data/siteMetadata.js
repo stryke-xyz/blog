@@ -4,15 +4,14 @@ const siteMetadata = {
   headerTitle: 'BLOG',
   description: 'The Official Decentralized Options Exchange (Dopex) Blog',
   language: 'en-us',
-  siteUrl: 'https://blog-bj2d0m97k-dopex.vercel.app/', //enter deployed site url here ending with /
+  siteUrl: 'https://blog-orpin-delta.vercel.app/', //enter deployed site url here ending with /
   siteRepo: '###',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
   github: 'https://github.com',
   twitter: 'https://twitter.com/dopex_io',
-  linkedin: 'https://www.linkedin.com',
-  discord: 'https://discord.com',
+  discord: 'https://discord.gg/ZsYSsSPF',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
