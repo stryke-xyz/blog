@@ -6,7 +6,7 @@ import Article from '@/components/Article'
 
 export async function getStaticPaths() {
   let { data } = await Storyblok.get('cdn/links/', {
-    starts_with: 'blog/',
+    starts_with: 'articles/',
   })
 
   return {
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
           slug: p.slug?.split(/\/|,/).slice(1),
         },
       })),
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -28,7 +28,7 @@ export async function getStaticProps({ params, preview = false }) {
     version: 'published', // or 'draft'
   }
 
-  const { data } = await Storyblok.get(`cdn/stories/blog/${[slug]}`, sbParams)
+  const { data } = await Storyblok.get(`cdn/stories/articles/${[slug]}`, sbParams)
 
   return {
     props: {
@@ -41,6 +41,7 @@ export async function getStaticProps({ params, preview = false }) {
 }
 
 export default function Blog({ post }) {
+  // eslint-disable-next-line no-unsafe-optional-chaining
   const { title, image, author, markdown } = post?.content
 
   return (

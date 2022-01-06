@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
 
   let { data } = await Storyblok.get(`cdn/stories/`, {
     page: 1,
-    starts_with: 'blog/',
+    starts_with: 'articles/',
   })
 
   const pagination = {
@@ -81,7 +81,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
       <PageSEO title={`Blog - ${siteMetadata.author}`} description={siteMetadata.description} />
       <ListLayout
         posts={posts}
-        title="All Posts"
+        title="All Articles"
         initialDisplayPosts={listOfPosts}
         pagination={pagination}
         handleNextPage={handleNextPage}

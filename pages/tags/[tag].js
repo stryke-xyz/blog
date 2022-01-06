@@ -16,13 +16,13 @@ export async function getStaticPaths() {
         tag: kebabCase(tag.name),
       },
     })),
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
 export async function getStaticProps({ params }) {
   const { data } = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'blog/',
+    starts_with: 'articles/',
   })
 
   //load filtered posted based on tags

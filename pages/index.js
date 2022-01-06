@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
 
   let { data } = await Storyblok.get(`cdn/stories/`, {
     page: 1,
-    starts_with: 'blog/',
+    starts_with: 'articles/',
   })
 
   const sortedStories = data?.stories
@@ -113,7 +113,7 @@ export default function Home({ stories }) {
           <Link
             href="/articles"
             className="text-blue-500 hover:text-blue-600 dark:hover:text-primary"
-            aria-label="all posts"
+            aria-label="all articles"
           >
             All Posts &rarr;
           </Link>
