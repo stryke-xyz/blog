@@ -66,7 +66,9 @@ export default function Home({ stories }) {
               <li key={index} className="py-6">
                 <article>
                   <div className="space-y-2 xl:grid xl:grid-cols-6 gap-3 xl:space-y-0">
-                    <img src={image} className="sm:w-full rounded-md col-span-2" />
+                    <Link href={`/${full_slug}`} className={'col-span-2 xl:mr-5'}>
+                      <img src={image} className="sm:w-full rounded-md" alt={title} />
+                    </Link>
                     <div className="space-y-5 xl:col-span-4">
                       <div className="space-y-1">
                         <div>
