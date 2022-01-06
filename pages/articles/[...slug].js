@@ -36,7 +36,6 @@ export async function getStaticProps({ params, preview = false }) {
       //author,
       preview,
     },
-    revalidate: 3600,
   }
 }
 

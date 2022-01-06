@@ -27,7 +27,7 @@ module.exports = {
         'white-dark': '#F6F9FF',
         'black-light': '#161B22',
         stieglitz: '#6176A1',
-        gray: colors.trueGray,
+        gray: colors.neutral,
         code: {
           green: '#b5f4a5',
           yellow: '#ffe484',
