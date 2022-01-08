@@ -4,7 +4,7 @@ const siteMetadata = {
   headerTitle: 'BLOG',
   description: 'The Official Decentralized Options Exchange (Dopex) Blog',
   language: 'en-us',
-  siteUrl: 'https://blog-orpin-delta.vercel.app/', //enter deployed site url here ending with /
+  siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
