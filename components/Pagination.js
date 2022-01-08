@@ -1,5 +1,3 @@
-import Link from '@/components/Link'
-
 export default function Pagination({ totalPages, currentPage, handleNextPage, handlePrevPage }) {
   const prevPage = parseInt(currentPage) - 1 > 0
   const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages)
