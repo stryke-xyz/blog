@@ -5,8 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import formatDate from '@/lib/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
-import { PageSEO } from './SEO'
-
+import { PageSEO } from '@/components/SEO'
 import H1 from '@/components/article-body/H1'
 import H2 from '@/components/article-body/H2'
 import H3 from '@/components/article-body/H3'
@@ -62,10 +61,10 @@ export default function ArticleBody({ title, date, image, author, markdown, tag_
         {markdown}
       </ReactMarkdown>
       <hr className="border-gray-300 dark:border-gray-700 py-2" />
-      <Link href={'/articles'}>
-        <span className="self-center xs:text-md lg:text-lg text-primary dark:text-wave-blue cursor-pointer">
+      <Link href={'/articles'} passHref>
+        <a className="self-center xs:text-md lg:text-lg text-primary dark:text-wave-blue cursor-pointer">
           &larr; Back to Blog
-        </span>
+        </a>
       </Link>
     </div>
   )
