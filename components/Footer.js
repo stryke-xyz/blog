@@ -11,7 +11,26 @@ export default function Footer() {
           <SocialIcon kind="discord" href={siteMetadata.discord} size="6" />
           <SocialIcon kind="github" href={siteMetadata.github} size="6" />
         </div>
-        <div className="flex mb-2 space-x-2 text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-gray-500 dark:text-gray-400 mb-3">
+          <a
+            className="hover:text-blue-500 dark:hover:text-blue-400"
+            href="https://dopex.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Site
+          </a>{' '}
+          |{' '}
+          <a
+            className="hover:text-blue-500 dark:hover:text-blue-400"
+            href="https://app.dopex.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            App
+          </a>
+        </div>
+        <div className="flex mb-4 space-x-2 text-sm text-gray-500 dark:text-gray-400">
           <div>{siteMetadata.author}</div>
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
