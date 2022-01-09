@@ -9,9 +9,9 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  github: 'https://github.com',
+  github: 'https://github.com/dopex-io',
   twitter: 'https://twitter.com/dopex_io',
-  discord: 'https://discord.gg/ZsYSsSPF',
+  discord: 'https://discord.gg/dopex',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
