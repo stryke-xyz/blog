@@ -34,7 +34,7 @@ export async function getStaticProps(context) {
       preview: context.preview || false,
       data,
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }
 
