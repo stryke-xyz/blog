@@ -11,7 +11,7 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage }) => {
       <meta name="description" content={description} />
       <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
       <meta property="og:type" content={ogType} />
-      <meta property="og:site_name" content={siteMetadata.title} />
+      <meta property="og:site_name" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
       {ogImage.constructor.name === 'Array' ? (
@@ -23,7 +23,7 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage }) => {
       <meta name="twitter:site" content={siteMetadata.twitter} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={twImage} />
+      <meta name="twitter:image" content={'https:' + twImage} />
     </Head>
   )
 }
@@ -67,21 +67,16 @@ export const TagSEO = ({ title, description }) => {
   )
 }
 
-export const BlogSEO = ({ authorDetails, title, summary, date, lastmod, url, images = [] }) => {
+export const BlogSEO = ({ authorDetails, title, summary, date, lastmod, url, images }) => {
   const router = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
-  let imagesArr =
-    images.length === 0
-      ? [siteMetadata.socialBanner]
-      : typeof images === 'string'
-      ? [images]
-      : images
+  let imagesArr = typeof images === 'string' ? [images] : images
 
   const featuredImages = imagesArr.map((img) => {
     return {
       '@type': 'ImageObject',
-      url: `${siteMetadata.siteUrl}${img}`,
+      url: `${img}`,
     }
   })
 
@@ -108,7 +103,7 @@ export const BlogSEO = ({ authorDetails, title, summary, date, lastmod, url, ima
       '@id': url,
     },
     headline: title,
-    image: featuredImages,
+    image: images[0],
     datePublished: publishedAt,
     dateModified: modifiedAt,
     author: authorList,

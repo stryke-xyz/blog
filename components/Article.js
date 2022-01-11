@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import formatDate from '@/lib/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
-import { PageSEO } from '@/components/SEO'
+import { BlogSEO } from '@/components/SEO'
 import H1 from '@/components/article-body/H1'
 import H2 from '@/components/article-body/H2'
 import H3 from '@/components/article-body/H3'
@@ -23,10 +23,10 @@ import Blockquote from '@/components/article-body/Blockquote'
 import Paragraph from '@/components/article-body/Paragraph'
 import Image from '@/components/article-body/Image'
 
-export default function ArticleBody({ title, date, image, author, markdown, tag_list }) {
+export default function ArticleBody({ title, summary, date, image, author, markdown, tag_list }) {
   return (
     <div className="space-y-4 mx-auto">
-      <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <BlogSEO title={title} summary={summary} date={date} images={[image]} />
       <div className="text-center space-y-4">
         <h2 className="text-end text-stieglitz">{formatDate(date)}</h2>
         <hr className="border-gray-300 dark:border-gray-700"></hr>

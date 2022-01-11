@@ -48,7 +48,7 @@ export default function Blog({ post }) {
 
   return (
     <>
-      <BlogSEO title={title} summary={summary} date={post.first_published_at} images={[image]} />
+      <BlogSEO title={title} summary={summary} date={post?.first_published_at} images={image} />
       <div className="mt-24 mx-auto">
         {post.content.draft ? (
           <>
@@ -67,6 +67,7 @@ export default function Blog({ post }) {
         ) : (
           <Article
             title={title}
+            summary={summary}
             date={post.first_published_at}
             image={image}
             author={author}
