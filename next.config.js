@@ -49,7 +49,7 @@ module.exports = withBundleAnalyzer({
       },
       {
         source: '/introducing-the-redacted-option-vaults-947ad9b03f9f',
-        destination: '/articles/ssov/dopex-will-list-binance-coin-bnb',
+        destination: '/articles/introducing-the-redacted-option-vaults',
         permanent: false,
       },
       {
@@ -73,7 +73,7 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: '/dopex-insider-team-q-a-part-1-4c6b96ace25c',
+        source: '/rdpx-single-staking-option-vaults-1d485567b95b',
         destination: '/articles/ssov/rdpx-single-staking-option-vaults',
         permanent: false,
       },
