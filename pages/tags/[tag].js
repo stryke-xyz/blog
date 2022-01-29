@@ -25,7 +25,7 @@ export async function getStaticProps({ params }) {
     starts_with: 'articles/',
   })
 
-  //load filtered posted based on tags
+  // Load filtered posted based on tags
   const filteredPosts = data.stories.filter((post) =>
     post.tag_list.map((t) => kebabCase(t)).includes(params.tag)
   )
