@@ -42,11 +42,11 @@ export async function getStaticProps(context) {
 }
 
 export default function Home({ stories }) {
-  let displayedStories = stories.slice(0, displayed).map((frontMatter) => frontMatter)
-
   const all_tags = [...new Set(stories.map((frontMatter) => frontMatter.tag_list).flat())]
 
   const [displayed, setDisplayed] = useState(5)
+
+  let displayedStories = stories?.slice(0, displayed).map((frontMatter) => frontMatter)
 
   const handleDisplayed = useCallback(() => {
     delay(() => setDisplayed(displayed + 5), 1000)
@@ -80,7 +80,7 @@ export default function Home({ stories }) {
                 return <Tag key={index} text={tag} />
               })}
             </div>
-            {displayedStories.map((frontMatter, index) => {
+            {displayedStories?.map((frontMatter, index) => {
               const { title, summary, image } = frontMatter.content
               const { full_slug, /*tag_list,*/ first_published_at } = frontMatter
               return (
