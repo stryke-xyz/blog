@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'

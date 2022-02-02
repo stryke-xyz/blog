@@ -43,12 +43,11 @@ export async function getStaticProps({ params, preview = false }) {
 }
 
 export default function Blog({ post }) {
-  // eslint-disable-next-line no-unsafe-optional-chaining
-  const { title, summary, image, author, markdown } = post?.content
+  const { title, summary, image, author, markdown } = post.content
 
   return (
     <>
-      <BlogSEO title={title} summary={summary} date={post?.first_published_at} images={image} />
+      <BlogSEO title={title} summary={summary} date={post?.first_published_at} images={[image]} />
       <div className="mt-24 mx-auto">
         {post.content.draft ? (
           <>
