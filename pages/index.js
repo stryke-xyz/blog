@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useContext } from 'react'
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -14,14 +14,14 @@ import Storyblok from '@/lib/utils/storyblok-service'
 
 import { LANGUAGE_MAPPING } from 'constants/index'
 
+import { LocalizationContext } from 'contexts/Localization'
+
 export async function getStaticProps(context) {
   let data = await Storyblok.get(`cdn/stories/`, {
-    page: 1,
     starts_with: 'articles/',
   })
 
   let zh_data = await Storyblok.get(`cdn/stories/`, {
-    page: 1,
     starts_with: 'zh/articles/',
   })
 
@@ -51,7 +51,7 @@ export async function getStaticProps(context) {
 
 export default function Home({ stories }) {
   const [displayed, setDisplayed] = useState(5)
-  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGE_MAPPING.english)
+  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext)
 
   const all_tags = [
     ...new Set(stories[selectedLanguage].map((frontMatter) => frontMatter.tag_list).flat()),
@@ -64,9 +64,10 @@ export default function Home({ stories }) {
     delay(() => setDisplayed(displayed + 5), 1000)
   }, [displayed])
 
-  const handleSelectLanguage = useCallback((e) => {
-    setSelectedLanguage(LANGUAGE_MAPPING[e.target.value])
-  }, [])
+  const handleSelectLanguage = useCallback(
+    (e) => setSelectedLanguage(e.target.value),
+    [setSelectedLanguage]
+  )
 
   return (
     <>
@@ -81,7 +82,6 @@ export default function Home({ stories }) {
             <select
               name="language-selector"
               id="lang-select"
-              defaultValue={selectedLanguage.default}
               onChange={handleSelectLanguage}
               className="h-1/2 my-auto rounded-xl dark:text-white dark:bg-cod-gray dark:border-umbra border-primary"
             >
