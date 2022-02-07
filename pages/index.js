@@ -12,45 +12,61 @@ import formatDate from '@/lib/utils/formatDate'
 import trimmedSummary from '@/lib/utils/trimmedSummary'
 import Storyblok from '@/lib/utils/storyblok-service'
 
+import { LANGUAGE_MAPPING } from 'constants/index'
+
 export async function getStaticProps(context) {
-  let params = {
-    version: 'draft',
-  }
-
-  if (context.preview) {
-    params.version = 'draft'
-    params.cv = Date.now()
-  }
-
-  let { data } = await Storyblok.get(`cdn/stories/`, {
+  let data = await Storyblok.get(`cdn/stories/`, {
     page: 1,
     starts_with: 'articles/',
   })
 
-  const sortedStories = data?.stories
+  let zh_data = await Storyblok.get(`cdn/stories/`, {
+    page: 1,
+    starts_with: 'zh/articles/',
+  })
+
+  const sortedStories = data.data?.stories
+    .map((frontMatter) => frontMatter)
+    .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
+
+  const sortedStoriesZh = zh_data.data?.stories
     .map((frontMatter) => frontMatter)
     .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
 
   return {
     props: {
-      stories: data ? sortedStories : false,
+      stories: {
+        en: data.data ? sortedStories : false,
+        zh: zh_data.data ? sortedStoriesZh : false,
+      },
       preview: context.preview || false,
-      data,
+      data: {
+        en: data.data,
+        zh: zh_data.data,
+      },
     },
     revalidate: 60,
   }
 }
 
 export default function Home({ stories }) {
-  const all_tags = [...new Set(stories.map((frontMatter) => frontMatter.tag_list).flat())]
-
   const [displayed, setDisplayed] = useState(5)
+  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGE_MAPPING.english)
 
-  let displayedStories = stories?.slice(0, displayed).map((frontMatter) => frontMatter)
+  const all_tags = [
+    ...new Set(stories[selectedLanguage].map((frontMatter) => frontMatter.tag_list).flat()),
+  ]
+  let displayedStories = stories[selectedLanguage]
+    ?.slice(0, displayed)
+    .map((frontMatter) => frontMatter)
 
   const handleDisplayed = useCallback(() => {
     delay(() => setDisplayed(displayed + 5), 1000)
   }, [displayed])
+
+  const handleSelectLanguage = useCallback((e) => {
+    setSelectedLanguage(LANGUAGE_MAPPING[e.target.value])
+  }, [])
 
   return (
     <>
@@ -58,18 +74,35 @@ export default function Home({ stories }) {
 
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
-          </h1>
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+              Latest
+            </h1>
+            <select
+              name="language-selector"
+              id="lang-select"
+              defaultValue={selectedLanguage.default}
+              onChange={handleSelectLanguage}
+              className="h-1/2 my-auto rounded-xl dark:text-white dark:bg-cod-gray dark:border-umbra border-primary"
+            >
+              {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
+                return (
+                  <option value={LANGUAGE_MAPPING.key} key={index}>
+                    {key}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
           <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
             {siteMetadata.description}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!stories.length && 'No posts found.'}
+          {!stories[selectedLanguage].length && 'No posts found.'}
           <InfiniteScroll
             dataLength={displayed}
-            hasMore={stories.length > displayed}
+            hasMore={stories[selectedLanguage].length > displayed}
             loader={<h4 className="text-center">Loading...</h4>}
             next={handleDisplayed}
             endMessage={<p className="text-center">Yay! You have seen it all 🎊</p>}
