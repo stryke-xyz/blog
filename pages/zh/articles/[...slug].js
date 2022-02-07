@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     .filter((p) => p.slug && !p.is_folder)
     .map((link) => ({
       params: {
-        slug: (link.alternates[0].lang + '/' + link.alternates[0].path).split(/\/|,/).slice(1),
+        slug: (link.alternates[0].lang + '/' + link.alternates[0].path).split(/\/|,/).slice(2),
       },
     }))
 
@@ -25,6 +25,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, preview = false }) {
   let slug = (await params.slug) ? params.slug.join('/') : 'home'
+
+  console.log(slug)
 
   const { data } = await Storyblok.get(`cdn/stories/articles/${slug}?language=zh`)
 
