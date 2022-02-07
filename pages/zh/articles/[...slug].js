@@ -26,8 +26,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, preview = false }) {
   let slug = (await params.slug) ? params.slug.join('/') : 'home'
 
-  console.log(slug)
-
   const { data } = await Storyblok.get(`cdn/stories/articles/${slug}?language=zh`)
 
   return {
