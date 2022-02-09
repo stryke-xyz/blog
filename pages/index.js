@@ -12,8 +12,6 @@ import formatDate from '@/lib/utils/formatDate'
 import trimmedSummary from '@/lib/utils/trimmedSummary'
 import Storyblok from '@/lib/utils/storyblok-service'
 
-import { LANGUAGE_MAPPING } from 'constants/index'
-
 import { LocalizationContext } from 'contexts/Localization'
 
 export async function getStaticProps(context) {
@@ -51,7 +49,7 @@ export async function getStaticProps(context) {
 
 export default function Home({ stories }) {
   const [displayed, setDisplayed] = useState(5)
-  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext)
+  const { selectedLanguage } = useContext(LocalizationContext)
 
   const all_tags = [
     ...new Set(stories[selectedLanguage].map((frontMatter) => frontMatter.tag_list).flat()),
@@ -64,38 +62,20 @@ export default function Home({ stories }) {
     delay(() => setDisplayed(displayed + 5), 1000)
   }, [displayed])
 
-  const handleSelectLanguage = useCallback(
-    (e) => setSelectedLanguage(e.target.value),
-    [setSelectedLanguage]
-  )
-
   return (
     <>
-      <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <PageSEO
+        title={siteMetadata.title[selectedLanguage]}
+        description={siteMetadata.description[selectedLanguage]}
+      />
 
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <div className="flex justify-between">
-            <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-              Latest
-            </h1>
-            <select
-              name="language-selector"
-              id="lang-select"
-              onChange={handleSelectLanguage}
-              className="h-1/2 my-auto rounded-xl dark:text-white dark:bg-cod-gray dark:border-umbra border-primary"
-            >
-              {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
-                return (
-                  <option value={LANGUAGE_MAPPING.key} key={index}>
-                    {key}
-                  </option>
-                )
-              })}
-            </select>
-          </div>
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+            Latest
+          </h1>
           <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
-            {siteMetadata.description}
+            {siteMetadata.description[selectedLanguage]}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">

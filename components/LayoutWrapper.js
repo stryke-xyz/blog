@@ -1,3 +1,4 @@
+import { useContext, useCallback } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
@@ -7,7 +8,20 @@ import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 
+import { LocalizationContext } from 'contexts/Localization'
+
+import { LANGUAGE_MAPPING } from 'constants/index'
+
 const LayoutWrapper = ({ children }) => {
+  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext)
+
+  const handleSelection = useCallback(
+    (e) => {
+      setSelectedLanguage(e.target.value)
+    },
+    [setSelectedLanguage]
+  )
+
   return (
     <SectionContainer>
       <div className="flex flex-col justify-between h-screen w-11/12 mx-auto">
@@ -18,12 +32,12 @@ const LayoutWrapper = ({ children }) => {
                 <div className="mr-3">
                   <Logo />
                 </div>
-                {typeof siteMetadata.headerTitle === 'string' ? (
+                {typeof siteMetadata.headerTitle[selectedLanguage] === 'string' ? (
                   <div className="hidden h-6 text-xl font-extrabold font-mono sm:block">
-                    {siteMetadata.headerTitle}
+                    {siteMetadata.headerTitle[selectedLanguage]}
                   </div>
                 ) : (
-                  siteMetadata.headerTitle
+                  siteMetadata.headerTitle[selectedLanguage]
                 )}
               </div>
             </Link>
@@ -34,12 +48,26 @@ const LayoutWrapper = ({ children }) => {
                 <Link
                   key={link.title}
                   href={link.href}
-                  className="text-lg p-1 font-light text-stieglitz sm:p-4 dark:text-wave-blue hover:text-primary"
+                  className="text-lg p-1 font-light text-stieglitz sm:p-4 dark:text-wave-blue hover:text-primary focus:border="
                 >
                   {link.title}
                 </Link>
               ))}
             </div>
+            <select
+              name="language-selector"
+              id="lang-select"
+              onChange={handleSelection}
+              className="h-1/2 my-auto rounded-xl dark:text-wave-blue dark:bg-black border-0"
+            >
+              {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
+                return (
+                  <option value={key} key={index}>
+                    {key}
+                  </option>
+                )
+              })}
+            </select>
             <ThemeSwitch />
             <MobileNav />
           </div>

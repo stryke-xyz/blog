@@ -1,8 +1,17 @@
 const siteMetadata = {
-  title: 'Dopex Blog',
+  title: {
+    en: 'Dopex Blog',
+    zh: 'Dopex Nihao',
+  },
   author: 'Dopex',
-  headerTitle: 'BLOG',
-  description: 'The Official Decentralized Options Exchange (Dopex) Blog',
+  headerTitle: {
+    en: 'BLOG',
+    zh: '博客',
+  },
+  description: {
+    en: 'The Official Decentralized Options Exchange (Dopex) Blog',
+    zh: '官方去中心化期权交易所 (Dopex) 博客',
+  },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',

@@ -7,7 +7,7 @@ import Storyblok from '../lib/utils/storyblok-service'
 
 import { LocalizationContext } from 'contexts/Localization'
 
-import { LANGUAGE_MAPPING, POSTS_PER_PAGE } from 'constants/index'
+import { POSTS_PER_PAGE } from 'constants/index'
 
 export async function getStaticProps() {
   let data = await Storyblok.get(`cdn/stories/`, {
@@ -87,13 +87,6 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
     [pagination, posts, selectedLanguage]
   )
 
-  const handleSelection = useCallback(
-    (e) => {
-      setSelectedLanguage(e.target.value)
-    },
-    [setSelectedLanguage]
-  )
-
   useEffect(() => {
     setListOfPosts(
       posts[selectedLanguage].slice(
@@ -105,23 +98,10 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
 
   return (
     <>
-      <PageSEO title={`Blog - All Articles`} description={siteMetadata.description} />
-      <div className="flex flex-row-reverse pt-6 mt-2">
-        <select
-          name="language-selector"
-          id="lang-select"
-          onChange={handleSelection}
-          className="h-1/2 my-auto rounded-xl dark:text-white dark:bg-cod-gray dark:border-umbra border-primary"
-        >
-          {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
-            return (
-              <option value={LANGUAGE_MAPPING.key} key={index}>
-                {key}
-              </option>
-            )
-          })}
-        </select>
-      </div>
+      <PageSEO
+        title={`Blog - All Articles`}
+        description={siteMetadata.description[selectedLanguage]}
+      />
       <ListLayout
         posts={posts[selectedLanguage]}
         title="All Articles"
