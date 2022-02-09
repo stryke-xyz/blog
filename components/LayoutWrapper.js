@@ -48,7 +48,7 @@ const LayoutWrapper = ({ children }) => {
                 <Link
                   key={link.title}
                   href={link.href}
-                  className="text-lg p-1 font-light text-stieglitz sm:p-4 dark:text-wave-blue hover:text-primary focus:border="
+                  className="text-lg p-1 font-light text-stieglitz sm:p-4 dark:text-wave-blue hover:text-primary"
                 >
                   {link.title}
                 </Link>
@@ -58,11 +58,11 @@ const LayoutWrapper = ({ children }) => {
               name="language-selector"
               id="lang-select"
               onChange={handleSelection}
-              className="h-1/2 my-auto rounded-xl dark:text-wave-blue dark:bg-black border-0"
+              className="h-1/2 my-auto rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz font-light bg-white-dark border-0"
             >
               {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
                 return (
-                  <option value={key} key={index}>
+                  <option value={key} key={index} className="text-right">
                     {key}
                   </option>
                 )
