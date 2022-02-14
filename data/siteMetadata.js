@@ -1,7 +1,7 @@
 const siteMetadata = {
   title: {
     en: 'Dopex Blog',
-    zh: 'Dopex Nihao',
+    zh: 'Dopex 博客',
   },
   author: 'Dopex',
   headerTitle: {
@@ -10,7 +10,25 @@ const siteMetadata = {
   },
   description: {
     en: 'The Official Decentralized Options Exchange (Dopex) Blog',
-    zh: '官方去中心化期权交易所 (Dopex) 博客',
+    zh: '去中心期权交易平台(Dopex)官方博客',
+  },
+  pagination: {
+    previous: {
+      en: 'Previous',
+      zh: '上页',
+    },
+    next: {
+      en: 'Next',
+      zh: '下页',
+    },
+  },
+  pageTitle: {
+    en: 'Latest',
+    zh: '最新',
+  },
+  allArticles: {
+    en: 'All Articles',
+    zh: '全部博文',
   },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /

@@ -104,7 +104,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
       />
       <ListLayout
         posts={posts[selectedLanguage]}
-        title="All Articles"
+        title={siteMetadata.allArticles[selectedLanguage]}
         initialDisplayPosts={listOfPosts}
         pagination={pagination}
         handleNextPage={handleNextPage}

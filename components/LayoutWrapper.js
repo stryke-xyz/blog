@@ -44,7 +44,7 @@ const LayoutWrapper = ({ children }) => {
           </div>
           <div className="flex items-center text-base leading-5">
             <div className="hidden sm:block">
-              {headerNavLinks.map((link) => (
+              {headerNavLinks[selectedLanguage].map((link) => (
                 <Link
                   key={link.title}
                   href={link.href}
@@ -58,12 +58,12 @@ const LayoutWrapper = ({ children }) => {
               name="language-selector"
               id="lang-select"
               onChange={handleSelection}
-              className="h-1/2 my-auto rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz font-light bg-white-dark border-0"
+              className="h-1/2 my-auto rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz text-lg font-light bg-white-dark border-0"
             >
               {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
                 return (
                   <option value={key} key={index} className="text-right">
-                    {key}
+                    {key.substring(0, 1).toLocaleUpperCase() + key.substring(1)}
                   </option>
                 )
               })}
