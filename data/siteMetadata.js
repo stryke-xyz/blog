@@ -30,6 +30,10 @@ const siteMetadata = {
     en: 'All Articles',
     zh: '全部博文',
   },
+  searchPlaceholder: {
+    en: 'Search articles',
+    zh: '搜索博文',
+  },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',
