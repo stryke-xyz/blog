@@ -1,4 +1,10 @@
+import { useContext } from 'react'
+
+import { LocalizationContext } from 'contexts/Localization'
+import siteMetadata from '@/data/siteMetadata'
+
 export default function Pagination({ totalPages, currentPage, handleNextPage, handlePrevPage }) {
+  const { selectedLanguage } = useContext(LocalizationContext)
   const prevPage = parseInt(currentPage) - 1 > 0
   const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages)
 
@@ -7,25 +13,25 @@ export default function Pagination({ totalPages, currentPage, handleNextPage, ha
       <nav className="flex justify-between">
         {!prevPage && (
           <button rel="previous" className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
+            {siteMetadata.pagination.previous[selectedLanguage]}
           </button>
         )}
         {prevPage && (
           <button rel="previous" onClick={() => handlePrevPage(prevPage)}>
-            Previous
+            {siteMetadata.pagination.previous[selectedLanguage]}
           </button>
         )}
         <span>
-          {currentPage} of {totalPages}
+          {currentPage} / {totalPages}
         </span>
         {!nextPage && (
           <button rel="next" className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
+            {siteMetadata.pagination.next[selectedLanguage]}
           </button>
         )}
         {nextPage && (
           <button rel="next" onClick={() => handleNextPage(nextPage)}>
-            Next
+            {siteMetadata.pagination.next[selectedLanguage]}
           </button>
         )}
       </nav>

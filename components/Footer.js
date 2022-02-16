@@ -1,8 +1,11 @@
+import { useContext } from 'react'
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import { LocalizationContext } from 'contexts/Localization'
 
 export default function Footer() {
+  const { selectedLanguage } = useContext(LocalizationContext)
   return (
     <footer>
       <div className="flex flex-col items-center mt-16">
@@ -35,7 +38,7 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
+          <Link href="/">{siteMetadata.title[selectedLanguage]}</Link>
         </div>
       </div>
     </footer>

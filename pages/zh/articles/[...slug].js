@@ -9,16 +9,16 @@ import Storyblok from '@/lib/utils/storyblok-service'
 export async function getStaticPaths() {
   let { data } = await Storyblok.get('cdn/links/')
 
-  let paths = Object.values(data.links)
+  let paths_zh = Object.values(data.links)
     .filter((p) => p.slug && !p.is_folder)
-    .map((p) => ({
+    .map((link) => ({
       params: {
-        slug: p.slug?.split(/\/|,/).slice(1),
+        slug: (link.alternates[0].lang + '/' + link.alternates[0].path).split(/\/|,/).slice(2),
       },
     }))
 
   return {
-    paths,
+    paths: paths_zh,
     fallback: 'blocking',
   }
 }
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, preview = false }) {
   let slug = (await params.slug) ? params.slug.join('/') : 'home'
 
-  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}`)
+  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}?language=zh`)
 
   return {
     props: {

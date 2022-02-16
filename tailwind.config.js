@@ -27,6 +27,8 @@ module.exports = {
         'white-dark': '#F6F9FF',
         'black-light': '#161B22',
         stieglitz: '#6176A1',
+        umbra: '#1E1E1E',
+        'cod-gray': '#151515',
         gray: colors.neutral,
         code: {
           green: '#b5f4a5',

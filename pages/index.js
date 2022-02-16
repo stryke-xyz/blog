@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useContext } from 'react'
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -12,41 +12,51 @@ import formatDate from '@/lib/utils/formatDate'
 import trimmedSummary from '@/lib/utils/trimmedSummary'
 import Storyblok from '@/lib/utils/storyblok-service'
 
+import { LocalizationContext } from 'contexts/Localization'
+
 export async function getStaticProps(context) {
-  let params = {
-    version: 'draft',
-  }
-
-  if (context.preview) {
-    params.version = 'draft'
-    params.cv = Date.now()
-  }
-
-  let { data } = await Storyblok.get(`cdn/stories/`, {
-    page: 1,
+  let data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
   })
 
-  const sortedStories = data?.stories
+  let zh_data = await Storyblok.get(`cdn/stories/`, {
+    starts_with: 'zh/articles/',
+  })
+
+  const sortedStories = data.data?.stories
+    .map((frontMatter) => frontMatter)
+    .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
+
+  const sortedStoriesZh = zh_data.data?.stories
     .map((frontMatter) => frontMatter)
     .sort((item1, item2) => new Date(item2.first_published_at) - new Date(item1.first_published_at))
 
   return {
     props: {
-      stories: data ? sortedStories : false,
+      stories: {
+        en: data.data ? sortedStories : false,
+        zh: zh_data.data ? sortedStoriesZh : false,
+      },
       preview: context.preview || false,
-      data,
+      data: {
+        en: data.data,
+        zh: zh_data.data,
+      },
     },
     revalidate: 60,
   }
 }
 
 export default function Home({ stories }) {
-  const all_tags = [...new Set(stories.map((frontMatter) => frontMatter.tag_list).flat())]
-
   const [displayed, setDisplayed] = useState(5)
+  const { selectedLanguage } = useContext(LocalizationContext)
 
-  let displayedStories = stories?.slice(0, displayed).map((frontMatter) => frontMatter)
+  const all_tags = [
+    ...new Set(stories[selectedLanguage].map((frontMatter) => frontMatter.tag_list).flat()),
+  ]
+  let displayedStories = stories[selectedLanguage]
+    ?.slice(0, displayed)
+    .map((frontMatter) => frontMatter)
 
   const handleDisplayed = useCallback(() => {
     delay(() => setDisplayed(displayed + 5), 1000)
@@ -54,25 +64,28 @@ export default function Home({ stories }) {
 
   return (
     <>
-      <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <PageSEO
+        title={siteMetadata.title[selectedLanguage]}
+        description={siteMetadata.description[selectedLanguage]}
+      />
 
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
+            {siteMetadata.pageTitle[selectedLanguage]}
           </h1>
           <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
-            {siteMetadata.description}
+            {siteMetadata.description[selectedLanguage]}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!stories.length && 'No posts found.'}
+          {!stories[selectedLanguage].length && 'No posts found.'}
           <InfiniteScroll
             dataLength={displayed}
-            hasMore={stories.length > displayed}
+            hasMore={stories[selectedLanguage].length > displayed}
             loader={<h4 className="text-center">Loading...</h4>}
             next={handleDisplayed}
-            endMessage={<p className="text-center">Yay! You have seen it all 🎊</p>}
+            endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}
             scrollThreshold={1.01}
           >
             <div className="flex sm:flex-row sm:justify-center flex-col text-center mt-6">

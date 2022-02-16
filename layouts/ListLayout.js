@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import formatDate from '@/lib/utils/formatDate'
 import trimmedSummary from '@/lib/utils/trimmedSummary'
@@ -6,6 +6,9 @@ import trimmedSummary from '@/lib/utils/trimmedSummary'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import Pagination from '@/components/Pagination'
+
+import { LocalizationContext } from 'contexts/Localization'
+import siteMetadata from '@/data/siteMetadata'
 
 export default function ListLayout({
   posts,
@@ -15,6 +18,8 @@ export default function ListLayout({
   handleNextPage,
   handlePrevPage,
 }) {
+  const { selectedLanguage } = useContext(LocalizationContext)
+
   const [searchValue, setSearchValue] = useState('')
   const filteredBlogPosts = posts.filter((frontMatter) => {
     const searchContent =
@@ -29,7 +34,7 @@ export default function ListLayout({
   return (
     <>
       <div className="divide-y">
-        <div className="pt-6 pb-8 space-y-2 md:space-y-5">
+        <div className="pt-2 pb-8 space-y-2 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
           </h1>
@@ -38,7 +43,7 @@ export default function ListLayout({
               aria-label="Search articles"
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search articles"
+              placeholder={siteMetadata.searchPlaceholder[selectedLanguage]}
               className="block w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-md dark:border-gray-900 focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-gray-100"
             />
             <svg

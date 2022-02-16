@@ -1,8 +1,43 @@
 const siteMetadata = {
-  title: 'Dopex Blog',
+  title: {
+    en: 'Dopex Blog',
+    zh: 'Dopex 博客',
+  },
   author: 'Dopex',
-  headerTitle: 'BLOG',
-  description: 'The Official Decentralized Options Exchange (Dopex) Blog',
+  headerTitle: {
+    en: 'BLOG',
+    zh: '博客',
+  },
+  description: {
+    en: 'The Official Decentralized Options Exchange (Dopex) Blog',
+    zh: '去中心期权交易平台(Dopex)官方博客',
+  },
+  pagination: {
+    previous: {
+      en: 'Previous',
+      zh: '上页',
+    },
+    next: {
+      en: 'Next',
+      zh: '下页',
+    },
+  },
+  pageTitle: {
+    en: 'Latest',
+    zh: '最新',
+  },
+  allArticles: {
+    en: 'All Articles',
+    zh: '全部博文',
+  },
+  searchPlaceholder: {
+    en: 'Search articles',
+    zh: '搜索博文',
+  },
+  loadedText: {
+    en: 'Yay! You have seen it all 🎊',
+    zh: '您已全阅读完 🎊',
+  },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',
