@@ -85,7 +85,7 @@ export default function Home({ stories }) {
             hasMore={stories[selectedLanguage].length > displayed}
             loader={<h4 className="text-center">Loading...</h4>}
             next={handleDisplayed}
-            endMessage={<p className="text-center">Yay! You have seen it all 🎊</p>}
+            endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}
             scrollThreshold={1.01}
           >
             <div className="flex sm:flex-row sm:justify-center flex-col text-center mt-6">

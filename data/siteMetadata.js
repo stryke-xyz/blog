@@ -34,6 +34,10 @@ const siteMetadata = {
     en: 'Search articles',
     zh: '搜索博文',
   },
+  loadedText: {
+    en: 'Yay! You have seen it all 🎊',
+    zh: '您已全阅读完 🎊',
+  },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',
