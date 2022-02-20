@@ -22,6 +22,7 @@ export async function getStaticProps(context) {
 
   let zh_data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'zh/articles/',
+    per_page: 100,
   })
 
   const sortedStories = data.data?.stories
