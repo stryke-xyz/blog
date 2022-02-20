@@ -17,6 +17,7 @@ import { LocalizationContext } from 'contexts/Localization'
 export async function getStaticProps(context) {
   let data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
+    per_page: 100,
   })
 
   let zh_data = await Storyblok.get(`cdn/stories/`, {
