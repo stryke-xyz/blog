@@ -12,10 +12,12 @@ import { POSTS_PER_PAGE } from 'constants/index'
 export async function getStaticProps() {
   let data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
+    per_page: 100,
   })
 
   let zh_data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'zh/articles/',
+    per_page: 100,
   })
 
   const pagination = {
