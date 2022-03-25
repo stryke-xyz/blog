@@ -3,14 +3,14 @@ import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import delay from 'lodash/delay'
-
-import Tag from '@/components/Tag'
+import { useRouter } from 'next/router'
 
 import siteMetadata from '@/data/siteMetadata'
 
 import formatDate from '@/lib/utils/formatDate'
 import trimmedSummary from '@/lib/utils/trimmedSummary'
 import Storyblok from '@/lib/utils/storyblok-service'
+import kebabCase from '@/lib/utils/kebabCase'
 
 import { LocalizationContext } from 'contexts/Localization'
 
@@ -50,6 +50,8 @@ export async function getStaticProps(context) {
 }
 
 export default function Home({ stories }) {
+  const router = useRouter()
+
   const [displayed, setDisplayed] = useState(5)
   const { selectedLanguage } = useContext(LocalizationContext)
 
@@ -64,6 +66,13 @@ export default function Home({ stories }) {
     delay(() => setDisplayed(displayed + 5), 1000)
   }, [displayed])
 
+  const handleSelection = useCallback(
+    (e) => {
+      router.push('tags/' + kebabCase(e.target.value))
+    },
+    [router]
+  )
+
   return (
     <>
       <PageSEO
@@ -76,9 +85,37 @@ export default function Home({ stories }) {
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {siteMetadata.pageTitle[selectedLanguage]}
           </h1>
-          <p className="text-lg leading-7 text-stieglitz dark:text-gray-400">
-            {siteMetadata.description[selectedLanguage]}
-          </p>
+          <div className="flex justify-between">
+            <p className="text-lg my-auto leading-7 text-stieglitz dark:text-gray-400">
+              {siteMetadata.description[selectedLanguage]}
+            </p>
+            <select
+              name="tag-selector"
+              id="tag-select"
+              onChange={handleSelection}
+              className="hidden lg:flex w-1/4 my-auto rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz sm:text-md text-md font-light bg-white-dark border border-primary"
+            >
+              {[siteMetadata.tagFilter[selectedLanguage]].concat(all_tags).map((tag, index) => (
+                <option key={index} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex justify-center">
+            <select
+              name="tag-selector"
+              id="tag-select"
+              onChange={handleSelection}
+              className="block lg:hidden w-1/3 my-auto rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz text-sm font-light bg-white-dark border border-primary"
+            >
+              {[siteMetadata.tagFilter[selectedLanguage]].concat(all_tags).map((tag, index) => (
+                <option key={index} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!stories[selectedLanguage].length && 'No posts found.'}
@@ -90,11 +127,6 @@ export default function Home({ stories }) {
             endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}
             scrollThreshold={1.01}
           >
-            <div className="flex sm:flex-row sm:justify-center flex-col text-center mt-6">
-              {all_tags.map((tag, index) => {
-                return <Tag key={index} text={tag} />
-              })}
-            </div>
             {displayedStories?.map((frontMatter, index) => {
               const { title, summary, image } = frontMatter.content
               const { full_slug, /*tag_list,*/ first_published_at } = frontMatter

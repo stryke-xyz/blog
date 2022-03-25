@@ -23,6 +23,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { data } = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
+    per_page: 100,
   })
 
   // Load filtered posted based on tags

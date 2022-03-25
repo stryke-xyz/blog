@@ -38,6 +38,10 @@ const siteMetadata = {
     en: 'Yay! You have seen it all 🎊',
     zh: '您已全阅读完 🎊',
   },
+  tagFilter: {
+    en: 'Filter By Topic',
+    zh: 'Filter By Topic',
+  },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /
   siteRepo: '###',
