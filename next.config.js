@@ -167,6 +167,11 @@ module.exports = withBundleAnalyzer({
         destination: '/articles/introducing-dopex-an-all-round-efficient-options-protocol',
         permanent: false,
       },
+      {
+        source: '/articles/dopex-community-NFTs',
+        destination: '/articles/introduction-series/dopex-community-NFTs',
+        permanent: false,
+      },
     ]
   },
 })
