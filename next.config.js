@@ -172,6 +172,11 @@ module.exports = withBundleAnalyzer({
         destination: '/articles/introduction-series/dopex-community-NFTs',
         permanent: false,
       },
+      {
+        source: '/articles/layertzero/introduction-to-layertzero',
+        destination: 'https://drive.google.com/file/d/10qLyunRHwrQ5wOTv2LGsrSQa6jQa9mdN/view',
+        permanent: false,
+      },
     ]
   },
 })
