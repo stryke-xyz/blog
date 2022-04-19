@@ -31,14 +31,16 @@ export async function getStaticProps() {
     .map((frontMatter: StoryData) => frontMatter)
     .sort(
       (item1: StoryData, item2: StoryData) =>
-        Number(item2.first_published_at) - Number(item1.first_published_at)
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
     );
 
   const sortedStoriesZh = zh_data.data?.stories
     .map((frontMatter: StoryData) => frontMatter)
     .sort(
       (item1: StoryData, item2: StoryData) =>
-        Number(item2.first_published_at) - Number(item1.first_published_at)
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
     );
 
   const initialDisplayPosts = {

@@ -98,8 +98,8 @@ export default function ListLayout({
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={first_published_at?.toString()}>
-                        {formatDate(Number(first_published_at))}
+                      <time dateTime={String(first_published_at)}>
+                        {formatDate(String(first_published_at))}
                       </time>
                     </dd>
                   </dl>
