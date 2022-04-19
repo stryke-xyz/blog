@@ -1,43 +1,50 @@
-import { useState, useCallback, useContext, useEffect } from 'react'
+import { useState, useCallback, useContext, useEffect } from 'react';
+import { StoryData } from 'storyblok-js-client';
 
-import { siteMetadata } from '@/data/siteMetadata'
+import { siteMetadata } from '@/data/siteMetadata';
 
-import ListLayout from '@/layouts/ListLayout'
-import { PageSEO } from '@/components/SEO'
-import Storyblok from '../lib/utils/storyblok-service'
+import ListLayout from '@/layouts/ListLayout';
+import { PageSEO } from '@/components/SEO';
+import Storyblok from '../lib/utils/storyblok-service';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
 
-import { POSTS_PER_PAGE } from 'constants/index'
+import { POSTS_PER_PAGE } from 'constants/index';
 
 export async function getStaticProps() {
   let data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
     per_page: 100,
-  })
+  });
 
   let zh_data = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'zh/articles/',
     per_page: 100,
-  })
+  });
 
   const pagination = {
     currentPage: 1,
     totalPages: Math.ceil(data.data.stories?.length / POSTS_PER_PAGE),
-  }
+  };
 
   const sortedStories = data.data?.stories
-    .map((frontMatter) => frontMatter)
-    .sort((item1, item2) => item2.first_published_at - item1.first_published_at)
+    .map((frontMatter: StoryData) => frontMatter)
+    .sort(
+      (item1: StoryData, item2: StoryData) =>
+        Number(item2.first_published_at) - Number(item1.first_published_at)
+    );
 
   const sortedStoriesZh = zh_data.data?.stories
-    .map((frontMatter) => frontMatter)
-    .sort((item1, item2) => item2.first_published_at - item1.first_published_at)
+    .map((frontMatter: StoryData) => frontMatter)
+    .sort(
+      (item1: StoryData, item2: StoryData) =>
+        Number(item2.first_published_at) - Number(item1.first_published_at)
+    );
 
   const initialDisplayPosts = {
     en: sortedStories.slice(0, POSTS_PER_PAGE * pagination.currentPage),
     zh: sortedStoriesZh.slice(0, POSTS_PER_PAGE * pagination.currentPage),
-  }
+  };
 
   return {
     props: {
@@ -52,43 +59,43 @@ export async function getStaticProps() {
         zh: zh_data.data,
       },
     },
-  }
+  };
 }
 
-export default function Blog({ posts, initialDisplayPosts, pagination }) {
-  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext)
+export default function Blog({ posts, initialDisplayPosts, pagination }: any) {
+  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext);
 
-  const [listOfPosts, setListOfPosts] = useState(initialDisplayPosts[selectedLanguage])
+  const [listOfPosts, setListOfPosts] = useState(initialDisplayPosts[selectedLanguage]);
 
   const handleNextPage = useCallback(
-    (nextPage) => {
+    (nextPage: any) => {
       if (nextPage) {
-        pagination.currentPage++
+        pagination.currentPage++;
         setListOfPosts(
           posts[selectedLanguage].slice(
             POSTS_PER_PAGE * (pagination.currentPage - 1),
             POSTS_PER_PAGE * pagination.currentPage
           )
-        )
+        );
       }
     },
     [pagination, posts, selectedLanguage]
-  )
+  );
 
   const handlePrevPage = useCallback(
-    (prevPage) => {
+    (prevPage: any) => {
       if (prevPage) {
-        pagination.currentPage--
+        pagination.currentPage--;
         setListOfPosts(
           posts[selectedLanguage].slice(
             POSTS_PER_PAGE * (pagination.currentPage - 1),
             POSTS_PER_PAGE * pagination.currentPage
           )
-        )
+        );
       }
     },
     [pagination, posts, selectedLanguage]
-  )
+  );
 
   useEffect(() => {
     setListOfPosts(
@@ -96,8 +103,8 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
         POSTS_PER_PAGE * (pagination.currentPage - 1),
         POSTS_PER_PAGE * pagination.currentPage
       )
-    )
-  }, [pagination.currentPage, posts, selectedLanguage, setSelectedLanguage])
+    );
+  }, [pagination.currentPage, posts, selectedLanguage, setSelectedLanguage]);
 
   return (
     <>
@@ -114,5 +121,5 @@ export default function Blog({ posts, initialDisplayPosts, pagination }) {
         handlePrevPage={handlePrevPage}
       />
     </>
-  )
+  );
 }

@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const Table = ({ children }) => {
-  return <table className="table-auto border-separate border-2 ">{children}</table>
+interface TableProps {
+  children: React.ReactNode | string;
 }
 
-export default Table
+const Table = ({ children }: TableProps) => {
+  return <table className="table-auto border-separate border-2 ">{children}</table>;
+};
+
+export default Table;

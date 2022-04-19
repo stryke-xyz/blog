@@ -1,29 +1,29 @@
-import { useContext, useCallback } from 'react'
-import { siteMetadata } from '@/data/siteMetadata'
-import headerNavLinks from '@/data/headerNavLinks'
-import Logo from '@/data/logo.svg'
-import Link from './Link'
-import SectionContainer from './SectionContainer'
-import Footer from './Footer'
-import MobileNav from './MobileNav'
-import ThemeSwitch from './ThemeSwitch'
-import Box from '@mui/material/Box'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
+import { useContext, useCallback } from 'react';
+import { siteMetadata } from '@/data/siteMetadata';
+import headerNavLinks from '@/data/headerNavLinks';
+import Logo from '@/data/logo.svg';
+import Link from './Link';
+import SectionContainer from './SectionContainer';
+import Footer from './Footer';
+import MobileNav from './MobileNav';
+import ThemeSwitch from './ThemeSwitch';
+import Box from '@mui/material/Box';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
 
-import { LANGUAGE_MAPPING } from 'constants/index'
+import { LANGUAGE_MAPPING } from 'constants/index';
 
-const LayoutWrapper = ({ children }) => {
-  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext)
+const LayoutWrapper = ({ children }: any) => {
+  const { selectedLanguage, setSelectedLanguage } = useContext(LocalizationContext);
 
   const handleSelection = useCallback(
-    (e) => {
-      setSelectedLanguage(e.target.value)
+    (e: any) => {
+      setSelectedLanguage(e.target.value);
     },
     [setSelectedLanguage]
-  )
+  );
 
   return (
     <SectionContainer>
@@ -43,7 +43,7 @@ const LayoutWrapper = ({ children }) => {
           </Box>
           <Box className="flex items-center text-base leading-5">
             <Box className="hidden sm:block">
-              {headerNavLinks[selectedLanguage].map((link) => (
+              {headerNavLinks[selectedLanguage].map((link: any) => (
                 <Link
                   key={link.title}
                   href={link.href}
@@ -57,7 +57,7 @@ const LayoutWrapper = ({ children }) => {
               id="lang-select"
               name="language-selector"
               value={Object.keys(LANGUAGE_MAPPING).find(
-                (key) => LANGUAGE_MAPPING[key] === selectedLanguage
+                (key: any) => LANGUAGE_MAPPING[key] === selectedLanguage
               )}
               onChange={handleSelection}
               classes={{ icon: 'dark:text-wave-blue text-black', select: 'px-3 py-2' }}
@@ -68,7 +68,7 @@ const LayoutWrapper = ({ children }) => {
                   <MenuItem value={key} key={index} className="text-right">
                     {key.substring(0, 1).toLocaleUpperCase() + key.substring(1)}
                   </MenuItem>
-                )
+                );
               })}
             </Select>
             <ThemeSwitch />
@@ -79,7 +79,7 @@ const LayoutWrapper = ({ children }) => {
         <Footer />
       </Box>
     </SectionContainer>
-  )
-}
+  );
+};
 
-export default LayoutWrapper
+export default LayoutWrapper;

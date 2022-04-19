@@ -1,4 +1,4 @@
-export const siteMetadata = {
+export const siteMetadata: any = {
   title: {
     en: 'Dopex Blog',
     zh: 'Dopex 博客',
@@ -58,4 +58,4 @@ export const siteMetadata = {
     simpleAnalytics: false, // true or false
     googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
   },
-}
+};

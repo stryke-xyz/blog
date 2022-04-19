@@ -1,39 +1,48 @@
-import { useState, useCallback, useContext } from 'react'
-import Link from '@/components/Link'
-import { PageSEO } from '@/components/SEO'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import delay from 'lodash/delay'
-import { useRouter } from 'next/router'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
+import { useState, useCallback, useContext } from 'react';
+import Link from '@/components/Link';
+import { PageSEO } from '@/components/SEO';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import delay from 'lodash/delay';
+import { useRouter } from 'next/router';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-import { siteMetadata } from '@/data/siteMetadata'
+import { siteMetadata } from '@/data/siteMetadata';
 
-import formatDate from '@/lib/utils/formatDate'
-import trimmedSummary from '@/lib/utils/trimmedSummary'
-import Storyblok from '@/lib/utils/storyblok-service'
-import kebabCase from '@/lib/utils/kebabCase'
+import formatDate from '@/lib/utils/formatDate';
+import trimmedSummary from '@/lib/utils/trimmedSummary';
+import Storyblok from '@/lib/utils/storyblok-service';
+import kebabCase from '@/lib/utils/kebabCase';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
+import { Stories, StoryData } from 'storyblok-js-client';
 
-export async function getStaticProps(context) {
-  let data = await Storyblok.get(`cdn/stories/`, {
+export async function getStaticProps(context: any) {
+  let data: Stories = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
     per_page: 100,
-  })
+  });
 
-  let zh_data = await Storyblok.get(`cdn/stories/`, {
+  let zh_data: Stories = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'zh/articles/',
     per_page: 100,
-  })
+  });
 
   const sortedStories = data.data?.stories
-    .map((frontMatter: any) => frontMatter)
-    .sort((item1: any, item2: any) => item2.first_published_at - item1.first_published_at)
+    .map((frontMatter: StoryData) => frontMatter)
+    .sort(
+      (item1: StoryData, item2: StoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
 
   const sortedStoriesZh = zh_data.data?.stories
-    .map((frontMatter: any) => frontMatter)
-    .sort((item1: any, item2: any) => item2.first_published_at - item1.first_published_at)
+    .map((frontMatter: StoryData) => frontMatter)
+    .sort(
+      (item1: StoryData, item2: StoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
 
   return {
     props: {
@@ -48,33 +57,42 @@ export async function getStaticProps(context) {
       },
     },
     revalidate: 60,
-  }
+  };
 }
 
-export default function Home({ stories }) {
-  const router = useRouter()
+// interface HomeProps {
+//   stories: {
+//     en: any;
+//     zh: any;
+//   };
+// }
 
-  const [displayed, setDisplayed] = useState(5)
-  const { selectedLanguage } = useContext(LocalizationContext)
+export default function Home({ stories }: any) {
+  const router = useRouter();
+
+  const [displayed, setDisplayed] = useState(5);
+  const { selectedLanguage } = useContext(LocalizationContext);
 
   const all_tags = [
-    ...new Set(stories[selectedLanguage].map((frontMatter) => frontMatter.tag_list).flat()),
-  ]
+    ...new Set(
+      stories[selectedLanguage].map((frontMatter: StoryData) => frontMatter.tag_list).flat()
+    ),
+  ];
 
   let displayedStories = stories[selectedLanguage]
     ?.slice(0, displayed)
-    .map((frontMatter) => frontMatter)
+    .map((frontMatter: StoryData) => frontMatter);
 
   const handleDisplayed = useCallback(() => {
-    delay(() => setDisplayed(displayed + 5), 1000)
-  }, [displayed])
+    delay(() => setDisplayed(displayed + 5), 1000);
+  }, [displayed]);
 
   const handleSelection = useCallback(
-    (e) => {
-      router.push('tags/' + kebabCase(e.target.value))
+    (e: any) => {
+      router.push('tags/' + kebabCase(e.target.value));
     },
     [router]
-  )
+  );
 
   return (
     <>
@@ -134,9 +152,9 @@ export default function Home({ stories }) {
             endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}
             scrollThreshold={1.01}
           >
-            {displayedStories?.map((frontMatter, index) => {
-              const { title, summary, image } = frontMatter.content
-              const { full_slug, /*tag_list,*/ first_published_at } = frontMatter
+            {displayedStories?.map((frontMatter: StoryData, index: number) => {
+              const { title, summary, image } = frontMatter.content;
+              const { full_slug, /*tag_list,*/ first_published_at } = frontMatter;
               return (
                 <li key={index} className="py-6">
                   <article>
@@ -158,8 +176,8 @@ export default function Home({ stories }) {
                             <dl>
                               <dt className="sr-only">Published on</dt>
                               <dd className="text-base font-medium leading-6 text-stieglitz dark:text-gray-400">
-                                <time dateTime={first_published_at}>
-                                  {formatDate(first_published_at)}
+                                <time dateTime={first_published_at?.toString()}>
+                                  {formatDate(Number(first_published_at))}
                                 </time>
                               </dd>
                             </dl>
@@ -181,11 +199,11 @@ export default function Home({ stories }) {
                     </div>
                   </article>
                 </li>
-              )
+              );
             })}
           </InfiniteScroll>
         </ul>
       </div>
     </>
-  )
+  );
 }

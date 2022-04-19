@@ -1,17 +1,29 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-import Typography from '@/components/UI/Typography'
+import Typography from '@/components/UI/Typography';
 
-import { useContext } from 'react'
+import { useContext } from 'react';
 
-import { LocalizationContext } from 'contexts/Localization'
-import { siteMetadata } from '@/data/siteMetadata'
+import { LocalizationContext } from 'contexts/Localization';
+import { siteMetadata } from '@/data/siteMetadata';
 
-export default function Pagination({ totalPages, currentPage, handleNextPage, handlePrevPage }) {
-  const { selectedLanguage } = useContext(LocalizationContext)
-  const prevPage = parseInt(currentPage) - 1 > 0
-  const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages)
+interface PaginationProps {
+  totalPages: string;
+  currentPage: string;
+  handleNextPage: Function;
+  handlePrevPage: Function;
+}
+
+export default function Pagination({
+  totalPages,
+  currentPage,
+  handleNextPage,
+  handlePrevPage,
+}: PaginationProps) {
+  const { selectedLanguage } = useContext(LocalizationContext);
+  const prevPage = parseInt(currentPage) - 1 > 0;
+  const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages);
 
   return (
     <Box className="pt-6 pb-8 space-y-2 md:space-y-5">
@@ -49,5 +61,5 @@ export default function Pagination({ totalPages, currentPage, handleNextPage, ha
         )}
       </Box>
     </Box>
-  )
+  );
 }

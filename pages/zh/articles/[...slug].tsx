@@ -1,13 +1,13 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import PageTitle from '@/components/PageTitle'
-import Article from '@/components/Article'
-import { BlogSEO } from '@/components/SEO'
+import PageTitle from '@/components/PageTitle';
+import Article from '@/components/Article';
+import { BlogSEO } from '@/components/SEO';
 
-import Storyblok from '@/lib/utils/storyblok-service'
+import Storyblok from '@/lib/utils/storyblok-service';
 
 export async function getStaticPaths() {
-  let { data } = await Storyblok.get('cdn/links/')
+  let { data } = await Storyblok.get('cdn/links/');
 
   let paths_zh = Object.values(data.links)
     .filter((p: any) => p.slug && !p.is_folder)
@@ -15,18 +15,18 @@ export async function getStaticPaths() {
       params: {
         slug: (link.alternates[0].lang + '/' + link.alternates[0].path).split(/\/|,/).slice(2),
       },
-    }))
+    }));
 
   return {
     paths: paths_zh,
     fallback: 'blocking',
-  }
+  };
 }
 
-export async function getStaticProps({ params, preview = false }) {
-  let slug = (await params.slug) ? params.slug.join('/') : 'home'
+export async function getStaticProps({ params, preview = false }: any) {
+  let slug = (await params.slug) ? params.slug.join('/') : 'home';
 
-  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}?language=zh`)
+  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}?language=zh`);
 
   return {
     props: {
@@ -34,11 +34,11 @@ export async function getStaticProps({ params, preview = false }) {
       preview,
     },
     revalidate: 60,
-  }
+  };
 }
 
-export default function Blog({ post }) {
-  const { title, summary, image, author, markdown } = post.content
+export default function Blog({ post }: any) {
+  const { title, summary, image, author, markdown } = post.content;
 
   return (
     <>
@@ -71,5 +71,5 @@ export default function Blog({ post }) {
         )}
       </div>
     </>
-  )
+  );
 }

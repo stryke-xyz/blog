@@ -1,6 +1,6 @@
 const trimmedSummary = (summary: string) => {
-  const limit = summary.split(' ').length < 25
-  return limit ? summary : summary.split(' ').splice(0, 25).join(' ') + '...'
-}
+  const limit = summary.split(' ').length < 25;
+  return limit ? summary : summary.split(' ').splice(0, 25).join(' ') + '...';
+};
 
-export default trimmedSummary
+export default trimmedSummary;

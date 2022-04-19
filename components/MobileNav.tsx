@@ -1,25 +1,25 @@
-import { useState, useContext } from 'react'
-import Link from './Link'
-import headerNavLinks from '@/data/headerNavLinks'
+import { useState, useContext } from 'react';
+import Link from './Link';
+import headerNavLinks from '@/data/headerNavLinks';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
 
 const MobileNav = () => {
-  const { selectedLanguage } = useContext(LocalizationContext)
+  const { selectedLanguage } = useContext(LocalizationContext);
 
-  const [navShow, setNavShow] = useState(false)
+  const [navShow, setNavShow] = useState(false);
 
   const onToggleNav = () => {
     setNavShow((status) => {
       if (status) {
-        document.body.style.overflow = 'auto'
+        document.body.style.overflow = 'auto';
       } else {
         // Prevent scrolling
-        document.body.style.overflow = 'hidden'
+        document.body.style.overflow = 'hidden';
       }
-      return !status
-    })
-  }
+      return !status;
+    });
+  };
 
   return (
     <div className="sm:hidden">
@@ -62,7 +62,7 @@ const MobileNav = () => {
           onClick={onToggleNav}
         ></button>
         <nav className="fixed h-full mt-8">
-          {headerNavLinks[selectedLanguage].map((link) => (
+          {headerNavLinks[selectedLanguage].map((link: any) => (
             <div key={link.title} className="px-12 py-4">
               <Link
                 href={link.href}
@@ -76,7 +76,7 @@ const MobileNav = () => {
         </nav>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileNav
+export default MobileNav;

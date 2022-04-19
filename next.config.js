@@ -1,6 +1,6 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
@@ -21,12 +21,12 @@ module.exports = withBundleAnalyzer({
           },
         },
       ],
-    })
+    });
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
     if (!dev && !isServer) {
       // Replace React with Preact only in client production build
@@ -34,10 +34,10 @@ module.exports = withBundleAnalyzer({
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',
-      })
+      });
     }
 
-    return config
+    return config;
   },
 
   async redirects() {
@@ -177,6 +177,6 @@ module.exports = withBundleAnalyzer({
         destination: 'https://drive.google.com/file/d/10qLyunRHwrQ5wOTv2LGsrSQa6jQa9mdN/view',
         permanent: false,
       },
-    ]
+    ];
   },
-})
+});

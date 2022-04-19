@@ -163,4 +163,4 @@ module.exports = {
   variants: {
     typography: ['dark'],
   },
-}
+};

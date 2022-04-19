@@ -1,15 +1,15 @@
-import { useContext } from 'react'
-import Box from '@mui/material/Box'
+import { useContext } from 'react';
+import Box from '@mui/material/Box';
 
-import { siteMetadata } from '@/data/siteMetadata'
+import { siteMetadata } from '@/data/siteMetadata';
 
-import Link from '@/components/Link'
-import SocialIcon from '@/components/social-icons'
+import Link from '@/components/Link';
+import SocialIcon from '@/components/social-icons';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
 
 export default function Footer() {
-  const { selectedLanguage } = useContext(LocalizationContext)
+  const { selectedLanguage } = useContext(LocalizationContext);
   return (
     <footer>
       <Box className="flex flex-col items-center mt-16">
@@ -46,5 +46,5 @@ export default function Footer() {
         </Box>
       </Box>
     </footer>
-  )
+  );
 }

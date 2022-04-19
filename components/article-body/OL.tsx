@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const OL = ({ children }) => {
-  return <ol className="pl-10 list-decimal py-2">{children}</ol>
+interface OLProps {
+  children: React.ReactNode | string;
 }
 
-export default OL
+const OL = ({ children }: OLProps) => {
+  return <ol className="pl-10 list-decimal py-2">{children}</ol>;
+};
+
+export default OL;

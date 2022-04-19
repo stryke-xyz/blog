@@ -1,4 +1,4 @@
-const headerNavLinks = {
+const headerNavLinks: any = {
   en: [
     { href: '/', title: 'Home' },
     { href: '/articles', title: 'All Articles' },
@@ -7,6 +7,6 @@ const headerNavLinks = {
     { href: '/', title: '主页' },
     { href: '/articles', title: '全部博文' },
   ],
-}
+};
 
-export default headerNavLinks
+export default headerNavLinks;

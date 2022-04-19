@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import cx from 'classnames'
-import Box, { BoxProps } from '@mui/material/Box'
+import { FC } from 'react';
+import cx from 'classnames';
+import Box, { BoxProps } from '@mui/material/Box';
 
 interface TypographyProps extends BoxProps {
-  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'caption'
+  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'caption';
 }
 
 const CLASSES = {
@@ -14,10 +14,10 @@ const CLASSES = {
   h5: 'text-lg dark:text-white text-black',
   h6: 'text-md dark:text-white text-black',
   caption: 'text-xs text-white',
-}
+};
 
 const Typography: FC<TypographyProps> = (props) => {
-  const { children, variant, component, className, ...otherProps } = props
+  const { children, variant, component, className, ...otherProps } = props;
 
   return (
     <Box
@@ -27,7 +27,7 @@ const Typography: FC<TypographyProps> = (props) => {
     >
       {children}
     </Box>
-  )
-}
+  );
+};
 
-export default Typography
+export default Typography;

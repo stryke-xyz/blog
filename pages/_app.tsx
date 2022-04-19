@@ -1,15 +1,16 @@
-import '@/style/index.css'
-import 'tailwindcss/tailwind.css'
+import { AppProps } from 'next/app';
+import '@/style/index.css';
+import 'tailwindcss/tailwind.css';
 
-import { ThemeProvider } from 'next-themes'
-import Head from 'next/head'
+import { ThemeProvider } from 'next-themes';
+import Head from 'next/head';
 
 // import Analytics from '@/components/analytics'
-import LayoutWrapper from '@/components/LayoutWrapper'
+import LayoutWrapper from '@/components/LayoutWrapper';
 
-import { LocalizationProvider } from 'contexts/Localization'
+import { LocalizationProvider } from 'contexts/Localization';
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute="class">
       <Head>
@@ -22,5 +23,5 @@ export default function App({ Component, pageProps }) {
         </LayoutWrapper>
       </LocalizationProvider>
     </ThemeProvider>
-  )
+  );
 }

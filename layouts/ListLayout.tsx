@@ -1,27 +1,28 @@
-import { useState, useContext } from 'react'
-import Box from '@mui/material/Box'
+import { useState, useContext } from 'react';
+import Box from '@mui/material/Box';
+import { StoryData } from 'storyblok-js-client';
 
-import { siteMetadata } from '@/data/siteMetadata'
-import formatDate from '@/lib/utils/formatDate'
-import trimmedSummary from '@/lib/utils/trimmedSummary'
+import { siteMetadata } from '@/data/siteMetadata';
+import formatDate from '@/lib/utils/formatDate';
+import trimmedSummary from '@/lib/utils/trimmedSummary';
 
-import Typography from '@/components/UI/Typography'
-import Link from '@/components/Link'
-import Tag from '@/components/Tag'
-import Pagination from '@/components/Pagination'
+import Typography from '@/components/UI/Typography';
+import Link from '@/components/Link';
+import Tag from '@/components/Tag';
+import Pagination from '@/components/Pagination';
 
-import { LocalizationContext } from 'contexts/Localization'
+import { LocalizationContext } from 'contexts/Localization';
 
 interface ListLayoutProps {
-  posts: any
-  title: string
-  initialDisplayPosts?: []
+  posts: any;
+  title: string;
+  initialDisplayPosts?: [];
   pagination?: {
-    currentPage: number
-    totalPages: number
-  }
-  handleNextPage?: Function
-  handlePrevPage?: Function
+    currentPage: string;
+    totalPages: string;
+  };
+  handleNextPage: Function;
+  handlePrevPage: Function;
 }
 
 export default function ListLayout({
@@ -32,18 +33,18 @@ export default function ListLayout({
   handleNextPage,
   handlePrevPage,
 }: ListLayoutProps) {
-  const { selectedLanguage } = useContext(LocalizationContext)
+  const { selectedLanguage } = useContext(LocalizationContext);
 
-  const [searchValue, setSearchValue] = useState('')
-  const filteredBlogPosts = posts.filter((frontMatter) => {
+  const [searchValue, setSearchValue] = useState('');
+  const filteredBlogPosts = posts.filter((frontMatter: StoryData) => {
     const searchContent =
-      frontMatter.content.title + frontMatter.content.summary + frontMatter.tag_list?.join(' ')
-    return searchContent.toLowerCase().includes(searchValue.toLowerCase())
-  })
+      frontMatter.content.title + frontMatter.content.summary + frontMatter.tag_list?.join(' ');
+    return searchContent.toLowerCase().includes(searchValue.toLowerCase());
+  });
 
   // If posts exist, display it if no searchValue is specified
   const displayPosts =
-    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
+    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts;
 
   return (
     <>
@@ -88,16 +89,18 @@ export default function ListLayout({
             </Box>
           ) : null}
 
-          {displayPosts.map((frontMatter) => {
-            const { title, summary } = frontMatter.content
-            const { full_slug, first_published_at, tag_list } = frontMatter
+          {displayPosts.map((frontMatter: StoryData) => {
+            const { title, summary } = frontMatter.content;
+            const { full_slug, first_published_at, tag_list } = frontMatter;
             return (
               <li key={full_slug} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={first_published_at}>{formatDate(first_published_at)}</time>
+                      <time dateTime={first_published_at?.toString()}>
+                        {formatDate(Number(first_published_at))}
+                      </time>
                     </dd>
                   </dl>
                   <Box className="space-y-3 xl:col-span-3">
@@ -122,11 +125,11 @@ export default function ListLayout({
                   </Box>
                 </article>
               </li>
-            )
+            );
           })}
         </ul>
       </Box>
-      {pagination && pagination.totalPages > 1 && !searchValue && (
+      {pagination && Number(pagination.totalPages) > 1 && !searchValue && (
         <Pagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
@@ -135,5 +138,5 @@ export default function ListLayout({
         />
       )}
     </>
-  )
+  );
 }
