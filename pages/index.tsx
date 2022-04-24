@@ -66,7 +66,6 @@ type Story = StoryData<{ title: string; summary: string; image: string }>;
 
 interface HomeProps {
   stories: {
-    // eslint-disable-next-line no-unused-vars
     [key in Languages]: Story[];
   };
 }
