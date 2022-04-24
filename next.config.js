@@ -1,15 +1,14 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ['ts', 'tsx'],
   eslint: {
     dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
   },
-  // experimental: { esmExternals: true },
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -21,23 +20,14 @@ module.exports = withBundleAnalyzer({
           },
         },
       ],
-    })
+    });
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
-    if (!dev && !isServer) {
-      // Replace React with Preact only in client production build
-      Object.assign(config.resolve.alias, {
-        react: 'preact/compat',
-        'react-dom/test-utils': 'preact/test-utils',
-        'react-dom': 'preact/compat',
-      })
-    }
-
-    return config
+    return config;
   },
 
   async redirects() {
@@ -177,6 +167,6 @@ module.exports = withBundleAnalyzer({
         destination: 'https://drive.google.com/file/d/10qLyunRHwrQ5wOTv2LGsrSQa6jQa9mdN/view',
         permanent: false,
       },
-    ]
+    ];
   },
-})
+});
