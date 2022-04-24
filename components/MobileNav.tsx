@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
 import Link from './Link';
-import headerNavLinks from '@/data/headerNavLinks';
 
 import { LocalizationContext } from 'contexts/Localization';
+
+import headerNavLinks from 'data/headerNavLinks';
 
 const MobileNav = () => {
   const { selectedLanguage } = useContext(LocalizationContext);

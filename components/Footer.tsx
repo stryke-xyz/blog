@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import Box from '@mui/material/Box';
 
-import { siteMetadata } from '@/data/siteMetadata';
+import { siteMetadata } from 'data/siteMetadata';
 
-import Link from '@/components/Link';
-import SocialIcon from '@/components/social-icons';
+import Link from 'components/Link';
+import SocialIcon from 'components/social-icons';
 
 import { LocalizationContext } from 'contexts/Localization';
 

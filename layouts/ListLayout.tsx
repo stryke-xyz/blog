@@ -2,14 +2,15 @@ import { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import { StoryData } from 'storyblok-js-client';
 
-import { siteMetadata } from '@/data/siteMetadata';
-import formatDate from '@/lib/utils/formatDate';
-import trimmedSummary from '@/lib/utils/trimmedSummary';
+import Typography from 'components/UI/Typography';
+import Link from 'components/Link';
+import Tag from 'components/Tag';
+import Pagination from 'components/Pagination';
 
-import Typography from '@/components/UI/Typography';
-import Link from '@/components/Link';
-import Tag from '@/components/Tag';
-import Pagination from '@/components/Pagination';
+import formatDate from 'lib/utils/formatDate';
+import trimmedSummary from 'lib/utils/trimmedSummary';
+
+import { siteMetadata } from 'data/siteMetadata';
 
 import { LocalizationContext } from 'contexts/Localization';
 

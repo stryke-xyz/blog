@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import kebabCase from '@/lib/utils/kebabCase';
+
+import kebabCase from 'lib/utils/kebabCase';
 
 interface TagProps {
   text: string;

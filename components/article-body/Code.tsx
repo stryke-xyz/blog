@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Pre from '@/components/Pre';
+import Pre from 'components/Pre';
 
 interface CodeProps {
   children: any | React.ReactNode;
