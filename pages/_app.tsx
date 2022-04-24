@@ -1,15 +1,14 @@
 import { AppProps } from 'next/app';
+import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
 import { StyledEngineProvider } from '@mui/material';
 
-import { ThemeProvider } from 'next-themes';
-import Head from 'next/head';
-
-// import Analytics from '@/components/analytics'
 import LayoutWrapper from '@/components/LayoutWrapper';
 
 import { LocalizationProvider } from 'contexts/Localization';
-import '@/style/index.css';
+
 import 'tailwindcss/tailwind.css';
+import '@/style/index.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +17,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Head>
           <meta content="width=device-width, initial-scale=1" name="viewport" />
         </Head>
-        {/* <Analytics /> */}
         <LocalizationProvider>
           <LayoutWrapper>
             <Component {...pageProps} />

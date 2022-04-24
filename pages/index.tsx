@@ -4,18 +4,20 @@ import { PageSEO } from '@/components/SEO';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import delay from 'lodash/delay';
 import { useRouter } from 'next/router';
+import { Stories, StoryData } from 'storyblok-js-client';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 import { siteMetadata } from '@/data/siteMetadata';
 
-import formatDate from '@/lib/utils/formatDate';
-import trimmedSummary from '@/lib/utils/trimmedSummary';
-import Storyblok from '@/lib/utils/storyblok-service';
-import kebabCase from '@/lib/utils/kebabCase';
+import formatDate from 'lib/utils/formatDate';
+import trimmedSummary from 'lib/utils/trimmedSummary';
+import Storyblok from 'lib/utils/storyblok-service';
+import kebabCase from 'lib/utils/kebabCase';
 
 import { LocalizationContext } from 'contexts/Localization';
-import { Stories, StoryData } from 'storyblok-js-client';
+
+import { Languages } from 'types';
 
 export async function getStaticProps(context: any) {
   let data: Stories = await Storyblok.get(`cdn/stories/`, {
@@ -47,10 +49,10 @@ export async function getStaticProps(context: any) {
   return {
     props: {
       stories: {
-        en: data.data ? sortedStories : false,
-        zh: zh_data.data ? sortedStoriesZh : false,
+        en: data.data ? sortedStories : [],
+        zh: zh_data.data ? sortedStoriesZh : [],
       },
-      preview: context.preview || false,
+      preview: context.preview || [],
       data: {
         en: data.data,
         zh: zh_data.data,
@@ -60,28 +62,28 @@ export async function getStaticProps(context: any) {
   };
 }
 
-// interface HomeProps {
-//   stories: {
-//     en: any;
-//     zh: any;
-//   };
-// }
+type Story = StoryData<{ title: string; summary: string; image: string }>;
 
-export default function Home({ stories }: any) {
+interface HomeProps {
+  stories: {
+    // eslint-disable-next-line no-unused-vars
+    [key in Languages]: Story[];
+  };
+}
+
+export default function Home({ stories }: HomeProps) {
   const router = useRouter();
 
   const [displayed, setDisplayed] = useState(5);
   const { selectedLanguage } = useContext(LocalizationContext);
 
   const all_tags = [
-    ...new Set(
-      stories[selectedLanguage].map((frontMatter: StoryData) => frontMatter.tag_list).flat()
-    ),
+    ...new Set(stories[selectedLanguage].map((frontMatter: Story) => frontMatter.tag_list).flat()),
   ];
 
   let displayedStories = stories[selectedLanguage]
     ?.slice(0, displayed)
-    .map((frontMatter: StoryData) => frontMatter);
+    .map((frontMatter: Story) => frontMatter);
 
   const handleDisplayed = useCallback(() => {
     delay(() => setDisplayed(displayed + 5), 1000);
@@ -152,9 +154,9 @@ export default function Home({ stories }: any) {
             endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}
             scrollThreshold={1.01}
           >
-            {displayedStories?.map((frontMatter: StoryData, index: number) => {
+            {displayedStories?.map((frontMatter: Story, index: number) => {
               const { title, summary, image } = frontMatter.content;
-              const { full_slug, /*tag_list,*/ first_published_at } = frontMatter;
+              const { full_slug, first_published_at } = frontMatter;
               return (
                 <li key={index} className="py-6">
                   <article>

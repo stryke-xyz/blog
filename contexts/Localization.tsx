@@ -8,8 +8,10 @@ import {
 } from 'react';
 import { LANGUAGE_MAPPING } from 'constants/index';
 
+import { Languages } from 'types';
+
 interface LocalizationContextProps {
-  selectedLanguage: string;
+  selectedLanguage: Languages;
   setSelectedLanguage: Function;
 }
 
