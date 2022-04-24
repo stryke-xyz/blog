@@ -1,19 +1,20 @@
 import { useState, useCallback, useContext } from 'react';
-import Link from '@/components/Link';
-import { PageSEO } from '@/components/SEO';
+import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import delay from 'lodash/delay';
-import { useRouter } from 'next/router';
-import { Stories, StoryData } from 'storyblok-js-client';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { Stories, StoryData } from 'storyblok-js-client';
 
-import { siteMetadata } from '@/data/siteMetadata';
+import Link from 'components/Link';
+import { PageSEO } from 'components/SEO';
 
 import formatDate from 'lib/utils/formatDate';
 import trimmedSummary from 'lib/utils/trimmedSummary';
 import Storyblok from 'lib/utils/storyblok-service';
 import kebabCase from 'lib/utils/kebabCase';
+
+import { siteMetadata } from 'data/siteMetadata';
 
 import { LocalizationContext } from 'contexts/Localization';
 

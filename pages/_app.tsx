@@ -4,12 +4,12 @@ import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
 import { StyledEngineProvider } from '@mui/material';
 
-import LayoutWrapper from '@/components/LayoutWrapper';
+import LayoutWrapper from 'components/LayoutWrapper';
 
 import { LocalizationProvider } from 'contexts/Localization';
 
 import 'tailwindcss/tailwind.css';
-import '@/style/index.css';
+import 'style/index.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

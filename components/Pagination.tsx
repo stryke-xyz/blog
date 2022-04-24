@@ -1,12 +1,12 @@
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import Typography from '@/components/UI/Typography';
-
-import { useContext } from 'react';
+import Typography from 'components/UI/Typography';
 
 import { LocalizationContext } from 'contexts/Localization';
-import { siteMetadata } from '@/data/siteMetadata';
+
+import { siteMetadata } from 'data/siteMetadata';
 
 interface PaginationProps {
   totalPages: string;

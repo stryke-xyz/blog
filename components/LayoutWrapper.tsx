@@ -1,17 +1,19 @@
 import { useContext, useCallback } from 'react';
-import { siteMetadata } from '@/data/siteMetadata';
-import headerNavLinks from '@/data/headerNavLinks';
-import Logo from '@/data/logo.svg';
-import Link from './Link';
-import SectionContainer from './SectionContainer';
-import Footer from './Footer';
-import MobileNav from './MobileNav';
-import ThemeSwitch from './ThemeSwitch';
+import { siteMetadata } from 'data/siteMetadata';
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
+import Link from 'components/Link';
+import SectionContainer from 'components/SectionContainer';
+import Footer from 'components/Footer';
+import MobileNav from 'components/MobileNav';
+import ThemeSwitch from 'components/ThemeSwitch';
+
 import { LocalizationContext } from 'contexts/Localization';
+
+import headerNavLinks from 'data/headerNavLinks';
+import Logo from 'data/logo.svg';
 
 import { LANGUAGE_MAPPING } from 'constants/index';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Typography from '@/components/UI/Typography';
+import Typography from 'components/UI/Typography';
 
 interface HeaderProps {
   children?: React.ReactNode & React.ReactNode[];
