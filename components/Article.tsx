@@ -46,12 +46,12 @@ export default function ArticleBody({ title, date, image, markdown, tag_list }: 
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          h1: H1! as any,
-          h2: H2! as any,
-          h3: H3! as any,
-          h4: H4! as any,
-          h5: H5! as any,
-          h6: H6! as any,
+          h1: H1,
+          h2: H2,
+          h3: H3,
+          h4: H4,
+          h5: H5,
+          h6: H6,
           ul: UL,
           ol: OL,
           li: LI,
