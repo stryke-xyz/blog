@@ -1,7 +1,5 @@
 import { AppProps } from 'next/app';
 import { StyledEngineProvider } from '@mui/material';
-import '@/style/index.css';
-import 'tailwindcss/tailwind.css';
 
 import { ThemeProvider } from 'next-themes';
 import Head from 'next/head';
@@ -10,6 +8,8 @@ import Head from 'next/head';
 import LayoutWrapper from '@/components/LayoutWrapper';
 
 import { LocalizationProvider } from 'contexts/Localization';
+import '@/style/index.css';
+import 'tailwindcss/tailwind.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
