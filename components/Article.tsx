@@ -4,20 +4,20 @@ import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 import Box from '@mui/material/Box';
 
-import formatDate from '@/lib/utils/formatDate';
+import { H1, H2, H3, H4, H5, H6 } from 'components/article-body/Header';
+import Tag from 'components/Tag';
+import Anchor from 'components/article-body/Anchor';
+import UL from 'components/article-body/UL';
+import OL from 'components/article-body/OL';
+import LI from 'components/article-body/LI';
+import Code from 'components/article-body/Code';
+import Table from 'components/article-body/Table';
+import Blockquote from 'components/article-body/Blockquote';
+import Paragraph from 'components/article-body/Paragraph';
+import Typography from 'components/UI/Typography';
+import Image from 'components/article-body/Image';
 
-import { H1, H2, H3, H4, H5, H6 } from '@/components/article-body/Header';
-import Tag from '@/components/Tag';
-import Anchor from '@/components/article-body/Anchor';
-import UL from '@/components/article-body/UL';
-import OL from '@/components/article-body/OL';
-import LI from '@/components/article-body/LI';
-import Code from '@/components/article-body/Code';
-import Table from '@/components/article-body/Table';
-import Blockquote from '@/components/article-body/Blockquote';
-import Paragraph from '@/components/article-body/Paragraph';
-import Typography from '@/components/UI/Typography';
-import Image from '@/components/article-body/Image';
+import formatDate from 'lib/utils/formatDate';
 
 interface ArticleBodyProps {
   title: string;

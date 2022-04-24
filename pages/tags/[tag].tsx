@@ -1,16 +1,16 @@
 import { useContext } from 'react';
 import { StoryData } from 'storyblok-js-client';
 
-import { TagSEO } from '@/components/SEO';
+import { TagSEO } from 'components/SEO';
 
-import ListLayout from '@/layouts/ListLayout';
+import ListLayout from 'layouts/ListLayout';
 
 import { LocalizationContext } from 'contexts/Localization';
 
-import kebabCase from '@/lib/utils/kebabCase';
-import Storyblok from '@/lib/utils/storyblok-service';
+import kebabCase from 'lib/utils/kebabCase';
+import Storyblok from 'lib/utils/storyblok-service';
 
-import { siteMetadata } from '@/data/siteMetadata';
+import { siteMetadata } from 'data/siteMetadata';
 
 export async function getStaticPaths() {
   let { data } = await Storyblok.get('cdn/tags/');

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-import PageTitle from '@/components/PageTitle';
-import Article from '@/components/Article';
-import { BlogSEO } from '@/components/SEO';
+import PageTitle from 'components/PageTitle';
+import Article from 'components/Article';
+import { BlogSEO } from 'components/SEO';
 
-import Storyblok from '@/lib/utils/storyblok-service';
+import Storyblok from 'lib/utils/storyblok-service';
 
 export async function getStaticPaths() {
   let { data } = await Storyblok.get('cdn/links/');

@@ -1,5 +1,6 @@
 import React from 'react';
-import Typography from '@/components/UI/Typography';
+
+import Typography from 'components/UI/Typography';
 
 interface ParagraphProps {
   children: React.ReactNode | string;

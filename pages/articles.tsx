@@ -1,13 +1,15 @@
 import { useState, useCallback, useContext, useEffect } from 'react';
 import { StoryData } from 'storyblok-js-client';
 
-import { siteMetadata } from '@/data/siteMetadata';
+import { PageSEO } from 'components/SEO';
 
-import ListLayout from '@/layouts/ListLayout';
-import { PageSEO } from '@/components/SEO';
-import Storyblok from '../lib/utils/storyblok-service';
+import ListLayout from 'layouts/ListLayout';
 
 import { LocalizationContext } from 'contexts/Localization';
+
+import Storyblok from 'lib/utils/storyblok-service';
+
+import { siteMetadata } from 'data/siteMetadata';
 
 import { POSTS_PER_PAGE } from 'constants/index';
 
