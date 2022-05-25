@@ -38,7 +38,10 @@ export async function getStaticProps({ params, preview = false }: any) {
 }
 
 export default function Blog({ post }: any) {
-  const { title, summary, image, /*author,*/ markdown } = post.content;
+  const { title, summary, image, author, markdown } = post.content;
+
+  // console.log('Story Data: ', author[0].Image, author[0].Image.name, author[0]);
+  // console.log('Image: ', image);
 
   return (
     <>
@@ -65,6 +68,7 @@ export default function Blog({ post }: any) {
             image={image}
             markdown={markdown}
             tag_list={post.tag_list}
+            author={author}
           />
         )}
       </div>

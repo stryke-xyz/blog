@@ -29,7 +29,14 @@ interface ArticleBodyProps {
   author?: any;
 }
 
-export default function ArticleBody({ title, date, image, markdown, tag_list }: ArticleBodyProps) {
+export default function ArticleBody({
+  title,
+  date,
+  image,
+  markdown,
+  tag_list,
+  author,
+}: ArticleBodyProps) {
   return (
     <Box className="space-y-4 mx-auto">
       <Box className="text-center space-y-4">
@@ -38,6 +45,16 @@ export default function ArticleBody({ title, date, image, markdown, tag_list }: 
         </Typography>
         <hr className="border-gray-300 dark:border-gray-700"></hr>
         <Typography variant="h1">{title}</Typography>
+        {author && (
+          <Box className="flex space-x-2 relative justify-center">
+            <img
+              src={author[0]?.Image.filename}
+              alt={author[0]?.Image.name ?? 'undefined'}
+              className="rounded-full w-[1.8rem]"
+            />
+            <Typography variant="h6">{author[0]?.Image.name}</Typography>
+          </Box>
+        )}
         {tag_list.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
