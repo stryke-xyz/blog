@@ -29,7 +29,7 @@ interface ArticleProps {
   markdown: string;
   tag_list: string[];
   summary?: string;
-  authors?: CustomBlok;
+  authors: CustomBlok[];
 }
 
 export default function Article(props: ArticleProps) {
