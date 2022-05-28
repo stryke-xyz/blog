@@ -64,9 +64,9 @@ export default function Blog({ post }: any) {
             summary={summary}
             date={post.first_published_at}
             image={image}
-            author={author}
             markdown={markdown}
             tag_list={post.tag_list}
+            authors={author}
           />
         )}
       </div>

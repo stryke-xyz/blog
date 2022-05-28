@@ -40,9 +40,6 @@ export async function getStaticProps({ params, preview = false }: any) {
 export default function Blog({ post }: any) {
   const { title, summary, image, author, markdown } = post.content;
 
-  // console.log('Story Data: ', author[0].Image, author[0].Image.name, author[0]);
-  // console.log('Image: ', image);
-
   return (
     <>
       <BlogSEO title={title} summary={summary} date={post?.first_published_at} images={[image]} />
@@ -64,11 +61,12 @@ export default function Blog({ post }: any) {
         ) : (
           <Article
             title={title}
+            summary={summary}
             date={post.first_published_at}
             image={image}
             markdown={markdown}
             tag_list={post.tag_list}
-            author={author}
+            authors={author}
           />
         )}
       </div>
