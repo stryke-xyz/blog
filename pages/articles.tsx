@@ -7,29 +7,23 @@ import ListLayout from 'layouts/ListLayout';
 
 import { LocalizationContext } from 'contexts/Localization';
 
-import Storyblok from 'lib/utils/storyblok-service';
-
 import { siteMetadata } from 'data/siteMetadata';
+import fetchStories from 'lib/utils/fetchStories';
 
 import { POSTS_PER_PAGE } from 'constants/index';
 
 export async function getStaticProps() {
-  let data = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'articles/',
-    per_page: 100,
-  });
-
-  let zh_data = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'zh/articles/',
-    per_page: 100,
-  });
+  const stories_en: StoryData[] = (await fetchStories(2)).map((item: any) => item.stories).flat();
+  const stories_zh: StoryData[] = (await fetchStories(2, 'zh/'))
+    .map((item: any) => item.stories)
+    .flat();
 
   const pagination = {
     currentPage: 1,
-    totalPages: Math.ceil(data.data.stories?.length / POSTS_PER_PAGE),
+    totalPages: Math.ceil(stories_en?.length / POSTS_PER_PAGE),
   };
 
-  const sortedStories = data.data?.stories
+  const sortedStories = stories_en
     .map((frontMatter: StoryData) => frontMatter)
     .sort(
       (item1: StoryData, item2: StoryData) =>
@@ -37,7 +31,7 @@ export async function getStaticProps() {
         new Date(item1.first_published_at!).getTime()
     );
 
-  const sortedStoriesZh = zh_data.data?.stories
+  const sortedStoriesZh = stories_zh
     .map((frontMatter: StoryData) => frontMatter)
     .sort(
       (item1: StoryData, item2: StoryData) =>
@@ -53,15 +47,11 @@ export async function getStaticProps() {
   return {
     props: {
       posts: {
-        en: data.data ? sortedStories : false,
-        zh: zh_data.data ? sortedStoriesZh : false,
+        en: sortedStories,
+        zh: sortedStoriesZh,
       },
       initialDisplayPosts,
       pagination,
-      data: {
-        en: data.data,
-        zh: zh_data.data,
-      },
     },
   };
 }
