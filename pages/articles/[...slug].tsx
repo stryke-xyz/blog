@@ -38,7 +38,7 @@ export async function getStaticProps({ params, preview = false }: any) {
 }
 
 export default function Blog({ post }: any) {
-  const { title, summary, image, /*author,*/ markdown } = post.content;
+  const { title, summary, image, author, markdown } = post.content;
 
   return (
     <>
@@ -61,10 +61,12 @@ export default function Blog({ post }: any) {
         ) : (
           <Article
             title={title}
+            summary={summary}
             date={post.first_published_at}
             image={image}
             markdown={markdown}
             tag_list={post.tag_list}
+            authors={author}
           />
         )}
       </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import { H1, H2, H3, H4, H5, H6 } from 'components/article-body/Header';
 import Tag from 'components/Tag';
@@ -19,20 +20,24 @@ import Image from 'components/article-body/Image';
 
 import formatDate from 'lib/utils/formatDate';
 
-interface ArticleBodyProps {
+import { CustomBlok } from 'types';
+
+interface ArticleProps {
   title: string;
   date: string;
   image: string;
   markdown: string;
   tag_list: string[];
   summary?: string;
-  author?: any;
+  authors: CustomBlok[];
 }
 
-export default function ArticleBody({ title, date, image, markdown, tag_list }: ArticleBodyProps) {
+export default function Article(props: ArticleProps) {
+  const { title, date, image, markdown, tag_list, authors = [] } = props;
+
   return (
     <Box className="space-y-4 mx-auto">
-      <Box className="text-center space-y-4">
+      <Box className="text-center space-y-2">
         <Typography variant="h6" className="text-end text-stieglitz font-semibod">
           {formatDate(date)}
         </Typography>
@@ -41,8 +46,21 @@ export default function ArticleBody({ title, date, image, markdown, tag_list }: 
         {tag_list.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
+        <Box className={`flex space-x-3 justify-center ${authors.length > 0 ? 'h-[1.8rem]' : ''}`}>
+          {authors.constructor === Array
+            ? authors?.map((auth: any, index: number) => (
+                <Tooltip key={index} title={auth.Image.name || auth.Image.title} arrow={true}>
+                  <img
+                    src={auth.Image.filename}
+                    alt={Image.name ?? 'undefined'}
+                    className="rounded-full w-[1.8rem] h-[1.8rem] absolute"
+                  />
+                </Tooltip>
+              ))
+            : null}
+        </Box>
       </Box>
-      <img src={image} className="mx-auto my-4" alt="cover" />
+      <img src={image} className="mx-auto my-4 rounded-md" alt="cover" />
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
