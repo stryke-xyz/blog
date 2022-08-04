@@ -155,7 +155,8 @@ export const BlogSEO = ({
     description: summary,
   };
 
-  const twImageUrl = featuredImages[0].url;
+  // Storyblok has deprecated 'Image' block & its newer 'Asset' block
+  const twImageUrl = featuredImages[0].url.split(/https:/)[1] ?? featuredImages[0].url;
 
   return (
     <>
