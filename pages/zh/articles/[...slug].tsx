@@ -40,9 +40,16 @@ export async function getStaticProps({ params, preview = false }: any) {
 export default function Blog({ post }: any) {
   const { title, summary, image, author, markdown } = post.content;
 
+  const imageUrl = typeof image === 'object' ? image.filename : image;
+
   return (
     <>
-      <BlogSEO title={title} summary={summary} date={post?.first_published_at} images={[image]} />
+      <BlogSEO
+        title={title}
+        summary={summary}
+        date={post?.first_published_at}
+        images={[imageUrl]}
+      />
       <div className="mt-24 mx-auto">
         {post.content.draft ? (
           <>
@@ -63,7 +70,7 @@ export default function Blog({ post }: any) {
             title={title}
             summary={summary}
             date={post.first_published_at}
-            image={image}
+            image={imageUrl}
             markdown={markdown}
             tag_list={post.tag_list}
             authors={author}

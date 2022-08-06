@@ -63,7 +63,7 @@ export async function getStaticProps(context: any) {
   };
 }
 
-type Story = StoryData<{ title: string; summary: string; image: string }>;
+type Story = StoryData<{ title: string; summary: string; image: any }>;
 
 interface HomeProps {
   stories: {
@@ -156,13 +156,14 @@ export default function Home({ stories }: HomeProps) {
           >
             {displayedStories?.map((frontMatter: Story, index: number) => {
               const { title, summary, image } = frontMatter.content;
+              const imageUrl = typeof image === 'object' ? image.filename : image;
               const { full_slug, first_published_at } = frontMatter;
               return (
                 <li key={index} className="py-6">
                   <article>
                     <div className="space-y-2 xl:grid xl:grid-cols-6 gap-3 xl:space-y-0">
                       <Link href={`/${full_slug}`} className={'col-span-2 xl:mr-5'}>
-                        <img src={image} className="sm:w-full rounded-md" alt={title} />
+                        <img src={imageUrl} className="sm:w-full rounded-md" alt={title} />
                       </Link>
                       <div className="space-y-5 xl:col-span-4">
                         <div className="space-y-1">
