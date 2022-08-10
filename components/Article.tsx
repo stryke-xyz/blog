@@ -38,7 +38,7 @@ export default function Article(props: ArticleProps) {
   return (
     <Box className="space-y-4 mx-auto">
       <Box className="text-center space-y-2">
-        <Typography variant="h6" className="text-end text-stieglitz font-semibod">
+        <Typography variant="h6" className="text-center text-stieglitz font-semibold">
           {formatDate(date)}
         </Typography>
         <hr className="border-gray-300 dark:border-gray-700"></hr>
@@ -46,14 +46,20 @@ export default function Article(props: ArticleProps) {
         {tag_list.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
-        <Box className={`flex space-x-3 justify-center ${authors.length > 0 ? 'h-[1.8rem]' : ''}`}>
+        <Box
+          className={`flex space-x-3 justify-center relative ${
+            authors.length > 0 ? 'h-[1.8rem]' : ''
+          }`}
+        >
           {authors.constructor === Array
             ? authors?.map((auth: any, index: number) => (
                 <Tooltip key={index} title={auth.Image.name || auth.Image.title} arrow={true}>
                   <img
                     src={auth.Image.filename}
                     alt={Image.name ?? 'undefined'}
-                    className="rounded-full w-[1.8rem] h-[1.8rem] absolute"
+                    className={`rounded-full w-[1.8rem] h-[1.8rem] absolute translate-x-${
+                      index * 2
+                    }`}
                   />
                 </Tooltip>
               ))
