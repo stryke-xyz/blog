@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.4",
-    "@svgr/webpack": "^6.1.2",
     "@types/github-slugger": "^2.0.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "^16",

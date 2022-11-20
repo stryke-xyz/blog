@@ -1,6 +1,6 @@
-import Github from './github.svg';
-import Twitter from './twitter.svg';
-import Discord from './discord.svg';
+import Github from './Github';
+import Twitter from './Twitter';
+import Discord from './Discord';
 
 const components = {
   github: Github,
