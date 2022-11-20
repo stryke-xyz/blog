@@ -8,7 +8,7 @@ interface TagProps {
 
 const Tag = ({ text }: TagProps) => {
   return (
-    <Link href={`/tags/${kebabCase(text)}`}>
+    <Link href={`/tags/${kebabCase(text)}`} legacyBehavior>
       <a className="mr-2 text-sm font-medium uppercase text-primary dark:text-wave-blue hover:underline">
         {text.split(' ').join('-')}
       </a>

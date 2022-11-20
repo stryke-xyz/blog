@@ -1,5 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { ISbStoryData } from 'storyblok-js-client';
 
 import { PageSEO } from 'components/SEO';
 
@@ -13,8 +13,10 @@ import fetchStories from 'lib/utils/fetchStories';
 import { POSTS_PER_PAGE } from 'constants/index';
 
 export async function getStaticProps() {
-  const stories_en: StoryData[] = (await fetchStories(2)).map((item: any) => item.stories).flat();
-  const stories_zh: StoryData[] = (await fetchStories(2, 'zh/'))
+  const stories_en: ISbStoryData[] = (await fetchStories(2))
+    .map((item: any) => item.stories)
+    .flat();
+  const stories_zh: ISbStoryData[] = (await fetchStories(2, 'zh/'))
     .map((item: any) => item.stories)
     .flat();
 
@@ -24,17 +26,17 @@ export async function getStaticProps() {
   };
 
   const sortedStories = stories_en
-    .map((frontMatter: StoryData) => frontMatter)
+    .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
-      (item1: StoryData, item2: StoryData) =>
+      (item1: ISbStoryData, item2: ISbStoryData) =>
         new Date(item2.first_published_at!).getTime() -
         new Date(item1.first_published_at!).getTime()
     );
 
   const sortedStoriesZh = stories_zh
-    .map((frontMatter: StoryData) => frontMatter)
+    .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
-      (item1: StoryData, item2: StoryData) =>
+      (item1: ISbStoryData, item2: ISbStoryData) =>
         new Date(item2.first_published_at!).getTime() -
         new Date(item1.first_published_at!).getTime()
     );

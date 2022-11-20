@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import delay from 'lodash/delay';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Stories, StoryData } from 'storyblok-js-client';
+import { ISbStories, ISbStoryData } from 'storyblok-js-client';
 
 import Link from 'components/Link';
 import { PageSEO } from 'components/SEO';
@@ -21,28 +21,28 @@ import { LocalizationContext } from 'contexts/Localization';
 import { Languages } from 'types';
 
 export async function getStaticProps(context: any) {
-  let data: Stories = await Storyblok.get(`cdn/stories/`, {
+  let data: ISbStories = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'articles/',
     per_page: 100,
   });
 
-  let zh_data: Stories = await Storyblok.get(`cdn/stories/`, {
+  let zh_data: ISbStories = await Storyblok.get(`cdn/stories/`, {
     starts_with: 'zh/articles/',
     per_page: 100,
   });
 
   const sortedStories = data.data?.stories
-    .map((frontMatter: StoryData) => frontMatter)
+    .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
-      (item1: StoryData, item2: StoryData) =>
+      (item1: ISbStoryData, item2: ISbStoryData) =>
         new Date(item2.first_published_at!).getTime() -
         new Date(item1.first_published_at!).getTime()
     );
 
   const sortedStoriesZh = zh_data.data?.stories
-    .map((frontMatter: StoryData) => frontMatter)
+    .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
-      (item1: StoryData, item2: StoryData) =>
+      (item1: ISbStoryData, item2: ISbStoryData) =>
         new Date(item2.first_published_at!).getTime() -
         new Date(item1.first_published_at!).getTime()
     );
@@ -63,10 +63,11 @@ export async function getStaticProps(context: any) {
   };
 }
 
-type Story = StoryData<{ title: string; summary: string; image: any }>;
+type Story = ISbStoryData<{ title: string; summary: string; image: any }>;
 
 interface HomeProps {
   stories: {
+    // eslint-disable-next-line no-unused-vars
     [key in Languages]: Story[];
   };
 }

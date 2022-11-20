@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
-import { StoryData } from 'storyblok-js-client';
+import { ISbStoryData } from 'storyblok-js-client';
 
 import Typography from 'components/UI/Typography';
 import Link from 'components/Link';
@@ -37,7 +37,7 @@ export default function ListLayout({
   const { selectedLanguage } = useContext(LocalizationContext);
 
   const [searchValue, setSearchValue] = useState('');
-  const filteredBlogPosts = posts.filter((frontMatter: StoryData) => {
+  const filteredBlogPosts = posts.filter((frontMatter: ISbStoryData) => {
     const searchContent =
       frontMatter.content.title + frontMatter.content.summary + frontMatter.tag_list?.join(' ');
     return searchContent.toLowerCase().includes(searchValue.toLowerCase());
@@ -90,7 +90,7 @@ export default function ListLayout({
             </Box>
           ) : null}
 
-          {displayPosts.map((frontMatter: StoryData) => {
+          {displayPosts.map((frontMatter: ISbStoryData) => {
             const { title, summary } = frontMatter.content;
             const { full_slug, first_published_at, tag_list } = frontMatter;
             return (
