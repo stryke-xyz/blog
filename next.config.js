@@ -3,6 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
+  staticPageGenerationTimeout: 240,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx'],
   eslint: {
@@ -29,7 +30,6 @@ module.exports = withBundleAnalyzer({
 
     return config;
   },
-
   async redirects() {
     return [
       {
