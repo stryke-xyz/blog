@@ -46,23 +46,19 @@ export default function Article(props: ArticleProps) {
         {tag_list.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
-        <Box
-          className={`flex space-x-3 justify-center relative ${
-            authors.length > 0 ? 'h-[1.8rem]' : ''
-          }`}
-        >
+        <Box className={`flex space-x-3 justify-center ${authors.length > 0 ? 'h-[1.8rem]' : ''}`}>
           {authors.constructor === Array
-            ? authors?.map((auth: any, index: number) => (
-                <Tooltip key={index} title={auth.Image.name || auth.Image.title} arrow={true}>
-                  <img
-                    src={auth.Image.filename}
-                    alt={Image.name ?? 'undefined'}
-                    className={`rounded-full w-[1.8rem] h-[1.8rem] absolute translate-x-${
-                      index * 2
-                    }`}
-                  />
-                </Tooltip>
-              ))
+            ? authors?.map((auth: any, index: number) => {
+                return (
+                  <Tooltip key={index} title={auth.Image.name || auth.Image.title} arrow={true}>
+                    <img
+                      src={auth.Image.filename}
+                      alt={auth.Image.name ?? 'undefined'}
+                      className={`rounded-full w-[1.8rem] h-[1.8rem]`}
+                    />
+                  </Tooltip>
+                );
+              })
             : null}
         </Box>
       </Box>
