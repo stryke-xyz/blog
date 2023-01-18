@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { ISbStoryData } from 'storyblok-js-client';
 
 import { TagSEO } from 'components/SEO';
 
@@ -37,11 +37,11 @@ export async function getStaticProps({ params }: any) {
   });
 
   // Load filtered posted based on tags
-  const filteredPosts = data.data.stories.filter((post: StoryData) =>
+  const filteredPosts = data.data.stories.filter((post: ISbStoryData) =>
     post.tag_list.map((t: string) => kebabCase(t)).includes(params.tag)
   );
 
-  const filteredPostsZh = zh_data.data.stories.filter((post: StoryData) =>
+  const filteredPostsZh = zh_data.data.stories.filter((post: ISbStoryData) =>
     post.tag_list.map((t: string) => kebabCase(t)).includes(params.tag)
   );
 

@@ -86,7 +86,7 @@ export default function Article(props: ArticleProps) {
         {markdown}
       </ReactMarkdown>
       <hr className="border-gray-300 dark:border-gray-700 py-2" />
-      <Link href={'/articles'} passHref>
+      <Link href={'/articles'} passHref legacyBehavior>
         <a className="self-center xs:text-md lg:text-lg text-primary dark:text-wave-blue cursor-pointer">
           &larr; Back to Blog
         </a>

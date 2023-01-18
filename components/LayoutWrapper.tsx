@@ -13,7 +13,7 @@ import ThemeSwitch from 'components/ThemeSwitch';
 import { LocalizationContext } from 'contexts/Localization';
 
 import headerNavLinks from 'data/headerNavLinks';
-import Logo from 'data/logo.svg';
+import Logo from 'data/Logo';
 
 import { LANGUAGE_MAPPING } from 'constants/index';
 
