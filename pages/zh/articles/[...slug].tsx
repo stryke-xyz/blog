@@ -35,7 +35,7 @@ export async function getStaticProps({ params, preview = false }: any) {
       post: (await data) ? data?.story : null,
       preview,
     },
-    revalidate: 60,
+    revalidate: 10,
   };
 }
 

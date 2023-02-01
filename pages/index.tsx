@@ -59,7 +59,7 @@ export async function getStaticProps(context: any) {
         zh: zh_data.data,
       },
     },
-    revalidate: 60,
+    revalidate: 10,
   };
 }
 

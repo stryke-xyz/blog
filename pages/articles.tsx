@@ -55,6 +55,7 @@ export async function getStaticProps() {
       initialDisplayPosts,
       pagination,
     },
+    revalidate: 10,
   };
 }
 
