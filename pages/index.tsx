@@ -156,7 +156,7 @@ export default function Home({ stories }: HomeProps) {
             scrollThreshold={1.01}
           >
             {displayedStories?.map((frontMatter: Story, index: number) => {
-              const { title, summary, image } = frontMatter.content;
+              const { title, summary = '', image } = frontMatter.content;
               const imageUrl = typeof image === 'object' ? image.filename : image;
               const { full_slug, first_published_at } = frontMatter;
               return (

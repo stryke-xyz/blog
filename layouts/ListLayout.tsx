@@ -91,7 +91,7 @@ export default function ListLayout({
           ) : null}
 
           {displayPosts.map((frontMatter: ISbStoryData) => {
-            const { title, summary } = frontMatter.content;
+            const { title, summary = '' } = frontMatter.content;
             const { full_slug, first_published_at, tag_list } = frontMatter;
             return (
               <li key={full_slug} className="py-4">
