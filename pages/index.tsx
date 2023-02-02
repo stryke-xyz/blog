@@ -93,7 +93,7 @@ export default function Home({ stories }: HomeProps) {
 
   useEffect(() => {
     (async () => {
-      await fetch('https://blog-hibou-de-nuit-dopex-io.vercel.app/api/revalidate');
+      await fetch('https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate');
     })();
   }, []);
 
