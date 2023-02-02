@@ -71,7 +71,6 @@ export default function Home({ stories }: HomeProps) {
   const { selectedLanguage } = useContext(LocalizationContext);
 
   const [displayed, setDisplayed] = useState(5);
-  // const [stories, setStories] = useState<>();
   const all_tags = [
     ...new Set(stories[selectedLanguage].map((frontMatter: Story) => frontMatter.tag_list).flat()),
   ];
@@ -93,7 +92,7 @@ export default function Home({ stories }: HomeProps) {
 
   useEffect(() => {
     (async () => {
-      await fetch('https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate');
+      await fetch('/api/revalidate');
     })();
   }, []);
 

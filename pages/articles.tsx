@@ -13,19 +13,9 @@ import fetchStories from 'lib/utils/fetchStories';
 import { POSTS_PER_PAGE } from 'constants/index';
 
 export async function getStaticProps() {
-  const stories_en: ISbStoryData[] = (await fetchStories(2))
+  const data: ISbStoryData[] = (await fetchStories(3))
     .map((item: any) => item.stories)
-    .flat();
-  const stories_zh: ISbStoryData[] = (await fetchStories(2, 'zh/'))
-    .map((item: any) => item.stories)
-    .flat();
-
-  const pagination = {
-    currentPage: 1,
-    totalPages: Math.ceil(stories_en?.length / POSTS_PER_PAGE),
-  };
-
-  const sortedStories = stories_en
+    .flat()
     .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
       (item1: ISbStoryData, item2: ISbStoryData) =>
@@ -33,7 +23,30 @@ export async function getStaticProps() {
         new Date(item1.first_published_at!).getTime()
     );
 
-  const sortedStoriesZh = stories_zh
+  let zh_data: ISbStoryData[] = (await fetchStories(3))
+    .map((item: any) => item.stories)
+    .flat()
+    .map((frontMatter: ISbStoryData) => frontMatter)
+    .sort(
+      (item1: ISbStoryData, item2: ISbStoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
+
+  const pagination = {
+    currentPage: 1,
+    totalPages: Math.ceil(data?.length / POSTS_PER_PAGE),
+  };
+
+  const sortedStories = zh_data
+    .map((frontMatter: ISbStoryData) => frontMatter)
+    .sort(
+      (item1: ISbStoryData, item2: ISbStoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
+
+  const sortedStoriesZh = zh_data
     .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
       (item1: ISbStoryData, item2: ISbStoryData) =>
@@ -95,7 +108,7 @@ export default function Blog({ posts, initialDisplayPosts, pagination }: any) {
 
   useEffect(() => {
     (async () => {
-      await fetch('https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate');
+      await fetch('/api/revalidate');
     })();
   }, []);
 

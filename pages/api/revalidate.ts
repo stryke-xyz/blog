@@ -24,6 +24,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
           new Date(item1.first_published_at!).getTime()
       );
 
+    await res.revalidate('/');
     if (data.length) {
       await res.revalidate(`/${data[0].full_slug}`);
       await res.revalidate(`/${data_zh[0].full_slug}`);
@@ -31,8 +32,12 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
       return res.json({
         revalidated,
         stories: {
-          en: data[0].full_slug,
-          zh: data_zh[0].full_slug,
+          latest: {
+            en: data[0].full_slug,
+            zh: data_zh[0].full_slug,
+          },
+          en: data,
+          zh: data_zh,
         },
       });
     }
