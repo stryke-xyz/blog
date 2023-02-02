@@ -1,18 +1,18 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback, useContext, useEffect } from 'react';
+import { ISbStoryData } from 'storyblok-js-client';
 import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import delay from 'lodash/delay';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { ISbStories, ISbStoryData } from 'storyblok-js-client';
 
 import Link from 'components/Link';
 import { PageSEO } from 'components/SEO';
 
 import formatDate from 'lib/utils/formatDate';
 import trimmedSummary from 'lib/utils/trimmedSummary';
-import Storyblok from 'lib/utils/storyblok-service';
 import kebabCase from 'lib/utils/kebabCase';
+import fetchStories from 'lib/utils/fetchStories';
 
 import { siteMetadata } from 'data/siteMetadata';
 
@@ -21,17 +21,9 @@ import { LocalizationContext } from 'contexts/Localization';
 import { Languages } from 'types';
 
 export async function getStaticProps(context: any) {
-  let data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'articles/',
-    per_page: 100,
-  });
-
-  let zh_data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'zh/articles/',
-    per_page: 100,
-  });
-
-  const sortedStories = data.data?.stories
+  const data: ISbStoryData[] = (await fetchStories(3))
+    .map((item: any) => item.stories)
+    .flat()
     .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
       (item1: ISbStoryData, item2: ISbStoryData) =>
@@ -39,7 +31,9 @@ export async function getStaticProps(context: any) {
         new Date(item1.first_published_at!).getTime()
     );
 
-  const sortedStoriesZh = zh_data.data?.stories
+  let zh_data: ISbStoryData[] = (await fetchStories(3))
+    .map((item: any) => item.stories)
+    .flat()
     .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
       (item1: ISbStoryData, item2: ISbStoryData) =>
@@ -50,13 +44,13 @@ export async function getStaticProps(context: any) {
   return {
     props: {
       stories: {
-        en: data.data ? sortedStories : [],
-        zh: zh_data.data ? sortedStoriesZh : [],
+        en: data ? data : [],
+        zh: zh_data ? zh_data : [],
       },
       preview: context.preview || [],
       data: {
-        en: data.data,
-        zh: zh_data.data,
+        en: data,
+        zh: zh_data,
       },
     },
     revalidate: 10,
@@ -75,9 +69,10 @@ interface HomeProps {
 export default function Home({ stories }: HomeProps) {
   const router = useRouter();
 
-  const [displayed, setDisplayed] = useState(5);
   const { selectedLanguage } = useContext(LocalizationContext);
 
+  const [displayed, setDisplayed] = useState(5);
+  // const [stories, setStories] = useState<>();
   const all_tags = [
     ...new Set(stories[selectedLanguage].map((frontMatter: Story) => frontMatter.tag_list).flat()),
   ];
@@ -97,13 +92,18 @@ export default function Home({ stories }: HomeProps) {
     [router]
   );
 
+  useEffect(() => {
+    (async () => {
+      await fetch('https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate');
+    })();
+  }, []);
+
   return (
     <>
       <PageSEO
         title={siteMetadata.title[selectedLanguage]}
         description={siteMetadata.description[selectedLanguage]}
       />
-
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">

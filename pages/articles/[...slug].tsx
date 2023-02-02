@@ -26,11 +26,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, preview = false }: any) {
   let slug = (await params.slug) ? params.slug.join('/') : 'home';
 
-  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}`);
+  const data = await (await Storyblok.get(`cdn/stories/articles/${slug}`)).data;
 
   return {
     props: {
-      post: (await data) ? data?.story : null,
+      post: data ? data?.story : null,
       preview,
     },
     revalidate: 10,

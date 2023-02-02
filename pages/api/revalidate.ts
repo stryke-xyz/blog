@@ -1,31 +1,43 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ISbStories, ISbStoryData } from 'storyblok-js-client';
+import { ISbStoryData } from 'storyblok-js-client';
 
-import Storyblok from 'lib/utils/storyblok-service';
+import fetchStories from 'lib/utils/fetchStories';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.query.secret !== process.env.NEXT_PUBLIC_API_SECRET) {
-    return res.status(401).json({ message: 'Invalid token' });
-  }
-
-  let data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'articles/',
-    per_page: 100,
-  });
-
-  const sortedStories = data.data?.stories
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
+export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+  let revalidated = false;
 
   try {
-    // revalidate latest article slug
-    await res.revalidate(`/${sortedStories[0].full_slug}`);
-    return res.json({ revalidated: true });
-  } catch (err) {
-    return res.status(500).send('Error revalidating');
+    let data: ISbStoryData[] = (await fetchStories(3))
+      .map((item: any) => item.stories)
+      .flat()
+      .sort(
+        (item1: ISbStoryData, item2: ISbStoryData) =>
+          new Date(item2.first_published_at!).getTime() -
+          new Date(item1.first_published_at!).getTime()
+      );
+    let data_zh: ISbStoryData[] = (await fetchStories(4, 'zh/'))
+      .map((item: any) => item.stories)
+      .flat()
+      .sort(
+        (item1: ISbStoryData, item2: ISbStoryData) =>
+          new Date(item2.first_published_at!).getTime() -
+          new Date(item1.first_published_at!).getTime()
+      );
+
+    if (data.length) {
+      await res.revalidate(`/${data[0].full_slug}`);
+      await res.revalidate(`/${data_zh[0].full_slug}`);
+      revalidated = true;
+      return res.json({
+        revalidated,
+        stories: {
+          en: data[0].full_slug,
+          zh: data_zh[0].full_slug,
+        },
+      });
+    }
+  } catch (e) {
+    revalidated = false;
   }
+  return res.json({ revalidated });
 }
