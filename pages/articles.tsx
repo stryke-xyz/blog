@@ -55,7 +55,6 @@ export async function getStaticProps() {
       initialDisplayPosts,
       pagination,
     },
-    revalidate: 10,
   };
 }
 
@@ -93,6 +92,12 @@ export default function Blog({ posts, initialDisplayPosts, pagination }: any) {
     },
     [pagination, posts, selectedLanguage]
   );
+
+  useEffect(() => {
+    (async () => {
+      await fetch('https://blog-hibou-de-nuit-dopex-io.vercel.app/api/revalidate');
+    })();
+  }, []);
 
   useEffect(() => {
     setListOfPosts(
