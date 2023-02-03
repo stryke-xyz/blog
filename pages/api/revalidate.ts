@@ -15,7 +15,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
           new Date(item2.first_published_at!).getTime() -
           new Date(item1.first_published_at!).getTime()
       );
-    let data_zh: ISbStoryData[] = (await fetchStories(4, 'zh/'))
+    let data_zh: ISbStoryData[] = (await fetchStories(3, 'zh/'))
       .map((item: any) => item.stories)
       .flat()
       .sort(
@@ -24,7 +24,6 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
           new Date(item1.first_published_at!).getTime()
       );
 
-    await res.revalidate('/');
     if (data.length) {
       await res.revalidate(`/${data[0].full_slug}`);
       await res.revalidate(`/${data_zh[0].full_slug}`);
