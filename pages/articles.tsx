@@ -1,5 +1,4 @@
 import { useState, useCallback, useContext, useEffect } from 'react';
-import { ISbStoryData } from 'storyblok-js-client';
 
 import { PageSEO } from 'components/SEO';
 
@@ -8,62 +7,29 @@ import ListLayout from 'layouts/ListLayout';
 import { LocalizationContext } from 'contexts/Localization';
 
 import { siteMetadata } from 'data/siteMetadata';
-import fetchStories from 'lib/utils/fetchStories';
 
 import { POSTS_PER_PAGE } from 'constants/index';
 
 export async function getStaticProps() {
-  const data: ISbStoryData[] = (await fetchStories(3))
-    .map((item: any) => item.stories)
-    .flat()
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
-  let zh_data: ISbStoryData[] = (await fetchStories(3))
-    .map((item: any) => item.stories)
-    .flat()
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
+  const { stories } = await fetch(
+    'https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate'
+  ).then((res) => res.json());
 
   const pagination = {
     currentPage: 1,
-    totalPages: Math.ceil(data?.length / POSTS_PER_PAGE),
+    totalPages: Math.ceil(stories['en']?.length / POSTS_PER_PAGE),
   };
 
-  const sortedStories = zh_data
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
-  const sortedStoriesZh = zh_data
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
   const initialDisplayPosts = {
-    en: sortedStories.slice(0, POSTS_PER_PAGE * pagination.currentPage),
-    zh: sortedStoriesZh.slice(0, POSTS_PER_PAGE * pagination.currentPage),
+    en: stories['en'].slice(0, POSTS_PER_PAGE * pagination.currentPage),
+    zh: stories['zh'].slice(0, POSTS_PER_PAGE * pagination.currentPage),
   };
 
   return {
     props: {
       posts: {
-        en: sortedStories,
-        zh: sortedStoriesZh,
+        en: stories['en'],
+        zh: stories['zh'],
       },
       initialDisplayPosts,
       pagination,
@@ -105,12 +71,6 @@ export default function Blog({ posts, initialDisplayPosts, pagination }: any) {
     },
     [pagination, posts, selectedLanguage]
   );
-
-  useEffect(() => {
-    (async () => {
-      await fetch('/api/revalidate');
-    })();
-  }, []);
 
   useEffect(() => {
     setListOfPosts(

@@ -1,4 +1,4 @@
-import { useState, useCallback, useContext, useEffect } from 'react';
+import { useState, useCallback, useContext, Key } from 'react';
 import { ISbStoryData } from 'storyblok-js-client';
 import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -12,7 +12,6 @@ import { PageSEO } from 'components/SEO';
 import formatDate from 'lib/utils/formatDate';
 import trimmedSummary from 'lib/utils/trimmedSummary';
 import kebabCase from 'lib/utils/kebabCase';
-import fetchStories from 'lib/utils/fetchStories';
 
 import { siteMetadata } from 'data/siteMetadata';
 
@@ -20,38 +19,14 @@ import { LocalizationContext } from 'contexts/Localization';
 
 import { Languages } from 'types';
 
-export async function getStaticProps(context: any) {
-  const data: ISbStoryData[] = (await fetchStories(3))
-    .map((item: any) => item.stories)
-    .flat()
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
-  let zh_data: ISbStoryData[] = (await fetchStories(3))
-    .map((item: any) => item.stories)
-    .flat()
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
+export async function getServerSideProps() {
+  const { stories }: { [key: string | Key]: Story[] } = await fetch(
+    'https://blog-git-fix-on-demand-isr-dopex-io.vercel.app/api/revalidate'
+  ).then((res) => res.json());
 
   return {
     props: {
-      stories: {
-        en: data ? data : [],
-        zh: zh_data ? zh_data : [],
-      },
-      preview: context.preview || [],
-      data: {
-        en: data,
-        zh: zh_data,
-      },
+      stories,
     },
   };
 }
@@ -89,12 +64,6 @@ export default function Home({ stories }: HomeProps) {
     },
     [router]
   );
-
-  useEffect(() => {
-    (async () => {
-      await fetch('/api/revalidate');
-    })();
-  }, []);
 
   return (
     <>
