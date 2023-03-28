@@ -1,11 +1,4 @@
-import {
-  useState,
-  useCallback,
-  createContext,
-  ReactChild,
-  ReactFragment,
-  ReactPortal,
-} from 'react';
+import { useState, useCallback, createContext, ReactFragment, ReactPortal, ReactNode } from 'react';
 import { LANGUAGE_MAPPING } from 'constants/index';
 
 import { Languages } from 'types';
@@ -16,14 +9,14 @@ interface LocalizationContextProps {
 }
 
 const initialState: LocalizationContextProps = {
-  selectedLanguage: LANGUAGE_MAPPING.english,
+  selectedLanguage: LANGUAGE_MAPPING['english'],
   setSelectedLanguage: () => {},
 };
 
 export const LocalizationContext = createContext(initialState);
 
 export const LocalizationProvider = (props: {
-  children: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
+  children: boolean | ReactFragment | ReactPortal | ReactNode | null | undefined;
 }) => {
   const [state, setState] = useState(initialState);
 

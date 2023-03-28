@@ -31,6 +31,11 @@ export async function getStaticProps(context: any) {
     per_page: 100,
   });
 
+  let vi_data: ISbStories = await Storyblok.get(`cdn/stories/`, {
+    starts_with: 'vi/articles/',
+    per_page: 100,
+  });
+
   const sortedStories = data.data?.stories
     .map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
@@ -47,16 +52,26 @@ export async function getStaticProps(context: any) {
         new Date(item1.first_published_at!).getTime()
     );
 
+  const sortedStoriesVi = vi_data.data?.stories
+    .map((frontMatter: ISbStoryData) => frontMatter)
+    .sort(
+      (item1: ISbStoryData, item2: ISbStoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
+
   return {
     props: {
       stories: {
         en: data.data ? sortedStories : [],
         zh: zh_data.data ? sortedStoriesZh : [],
+        vi: vi_data.data ? sortedStoriesVi : [],
       },
       preview: context.preview || [],
       data: {
         en: data.data,
         zh: zh_data.data,
+        vi: vi_data.data,
       },
     },
     revalidate: 60,
@@ -77,7 +92,6 @@ export default function Home({ stories }: HomeProps) {
 
   const [displayed, setDisplayed] = useState(5);
   const { selectedLanguage } = useContext(LocalizationContext);
-
   const all_tags = [
     ...new Set(stories[selectedLanguage].map((frontMatter: Story) => frontMatter.tag_list).flat()),
   ];

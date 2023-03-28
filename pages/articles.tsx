@@ -19,6 +19,9 @@ export async function getStaticProps() {
   const stories_zh: ISbStoryData[] = (await fetchStories(2, 'zh/'))
     .map((item: any) => item.stories)
     .flat();
+  const stories_vi: ISbStoryData[] = (await fetchStories(2, 'vi/'))
+    .map((item: any) => item.stories)
+    .flat();
 
   const pagination = {
     currentPage: 1,
@@ -41,9 +44,18 @@ export async function getStaticProps() {
         new Date(item1.first_published_at!).getTime()
     );
 
+  const sortedStoriesVi = stories_vi
+    .map((frontMatter: ISbStoryData) => frontMatter)
+    .sort(
+      (item1: ISbStoryData, item2: ISbStoryData) =>
+        new Date(item2.first_published_at!).getTime() -
+        new Date(item1.first_published_at!).getTime()
+    );
+
   const initialDisplayPosts = {
     en: sortedStories.slice(0, POSTS_PER_PAGE * pagination.currentPage),
     zh: sortedStoriesZh.slice(0, POSTS_PER_PAGE * pagination.currentPage),
+    vi: sortedStoriesVi.slice(0, POSTS_PER_PAGE * pagination.currentPage),
   };
 
   return {
@@ -51,6 +63,7 @@ export async function getStaticProps() {
       posts: {
         en: sortedStories,
         zh: sortedStoriesZh,
+        vi: sortedStoriesVi,
       },
       initialDisplayPosts,
       pagination,

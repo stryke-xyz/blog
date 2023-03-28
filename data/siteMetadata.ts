@@ -2,11 +2,13 @@ export const siteMetadata: any = {
   title: {
     en: 'Dopex Blog',
     zh: 'Dopex 博客',
+    vi: 'Dopex nhật ký trực tuyến',
   },
   author: 'Dopex',
   headerTitle: {
     en: 'BLOG',
     zh: '博客',
+    vi: 'nhật ký trực tuyến',
   },
   description: {
     en: 'The Official Decentralized Options Exchange (Dopex) Blog',
@@ -16,31 +18,38 @@ export const siteMetadata: any = {
     previous: {
       en: 'Previous',
       zh: '上页',
+      vi: 'trước',
     },
     next: {
       en: 'Next',
       zh: '下页',
+      vi: 'Kế tiếp',
     },
   },
   pageTitle: {
     en: 'Latest',
     zh: '最新',
+    vi: 'Muộn nhất',
   },
   allArticles: {
     en: 'All Articles',
     zh: '全部博文',
+    vi: 'Tất cả bài báo',
   },
   searchPlaceholder: {
     en: 'Search articles',
     zh: '搜索博文',
+    vi: 'Tìm kiếm bài viết',
   },
   loadedText: {
     en: 'Yay! You have seen it all 🎊',
     zh: '您已全阅读完 🎊',
+    vi: 'Bạn đã nhìn thấy tất cả! 🎊',
   },
   tagFilter: {
     en: 'Filter By Topic',
     zh: 'Filter By Topic',
+    vi: 'Lọc theo chủ đề',
   },
   language: 'en-us',
   siteUrl: 'https://blog.dopex.io', //enter deployed site url here ending with /

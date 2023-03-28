@@ -7,6 +7,10 @@ const headerNavLinks: any = {
     { href: '/', title: '主页' },
     { href: '/articles', title: '全部博文' },
   ],
+  vi: [
+    { href: '/', title: 'trang chủ' },
+    { href: '/articles', title: 'Tất cả bài báo' },
+  ],
 };
 
 export default headerNavLinks;
