@@ -58,20 +58,17 @@ const LayoutWrapper = ({ children }: any) => {
             <Select
               id="lang-select"
               name="language-selector"
-              value={Object.keys(LANGUAGE_MAPPING).find(
-                (key: any) => LANGUAGE_MAPPING[key] === selectedLanguage
-              )}
+              value={selectedLanguage}
               onChange={handleSelection}
               classes={{ icon: 'dark:text-wave-blue text-black', select: 'px-3 py-2' }}
               className="rounded-xl dark:text-wave-blue dark:bg-black text-stieglitz text-lg font-light bg-white-dark border-0 dark:border dark:border-stieglitz"
             >
-              {Object.keys(LANGUAGE_MAPPING).map((key, index) => {
-                return (
-                  <MenuItem value={key} key={index} className="text-right">
-                    {key.substring(0, 1).toLocaleUpperCase() + key.substring(1)}
-                  </MenuItem>
-                );
-              })}
+              {Object.keys(LANGUAGE_MAPPING).map((key, index) => (
+                <MenuItem value={key} key={index} className="text-right">
+                  {LANGUAGE_MAPPING[key].substring(0, 1).toLocaleUpperCase() +
+                    LANGUAGE_MAPPING[key].substring(1)}
+                </MenuItem>
+              ))}
             </Select>
             <ThemeSwitch />
             <MobileNav />

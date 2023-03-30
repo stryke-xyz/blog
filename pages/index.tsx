@@ -18,21 +18,11 @@ import { siteMetadata } from 'data/siteMetadata';
 
 import { LocalizationContext } from 'contexts/Localization';
 
-import { Languages } from 'types';
-
 export async function getStaticProps(context: any) {
+  const _url_prefix = context.locale === 'en' ? '' : context.locale + '/';
+
   let data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'articles/',
-    per_page: 100,
-  });
-
-  let zh_data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'zh/articles/',
-    per_page: 100,
-  });
-
-  let vi_data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: 'vi/articles/',
+    starts_with: `${_url_prefix}articles/`,
     per_page: 100,
   });
 
@@ -44,34 +34,12 @@ export async function getStaticProps(context: any) {
         new Date(item1.first_published_at!).getTime()
     );
 
-  const sortedStoriesZh = zh_data.data?.stories
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
-  const sortedStoriesVi = vi_data.data?.stories
-    .map((frontMatter: ISbStoryData) => frontMatter)
-    .sort(
-      (item1: ISbStoryData, item2: ISbStoryData) =>
-        new Date(item2.first_published_at!).getTime() -
-        new Date(item1.first_published_at!).getTime()
-    );
-
   return {
     props: {
-      stories: {
-        en: data.data ? sortedStories : [],
-        zh: zh_data.data ? sortedStoriesZh : [],
-        vi: vi_data.data ? sortedStoriesVi : [],
-      },
+      stories: data.data ? sortedStories : [],
       preview: context.preview || [],
       data: {
         en: data.data,
-        zh: zh_data.data,
-        vi: vi_data.data,
       },
     },
     revalidate: 60,
@@ -81,10 +49,7 @@ export async function getStaticProps(context: any) {
 type Story = ISbStoryData<{ title: string; summary: string; image: any }>;
 
 interface HomeProps {
-  stories: {
-    // eslint-disable-next-line no-unused-vars
-    [key in Languages]: Story[];
-  };
+  stories: Story[];
 }
 
 export default function Home({ stories }: HomeProps) {
@@ -92,13 +57,9 @@ export default function Home({ stories }: HomeProps) {
 
   const [displayed, setDisplayed] = useState(5);
   const { selectedLanguage } = useContext(LocalizationContext);
-  const all_tags = [
-    ...new Set(stories[selectedLanguage].map((frontMatter: Story) => frontMatter.tag_list).flat()),
-  ];
+  const all_tags = [...new Set(stories.map((frontMatter: Story) => frontMatter.tag_list).flat())];
 
-  let displayedStories = stories[selectedLanguage]
-    ?.slice(0, displayed)
-    .map((frontMatter: Story) => frontMatter);
+  let displayedStories = stories?.slice(0, displayed).map((frontMatter: Story) => frontMatter);
 
   const handleDisplayed = useCallback(() => {
     delay(() => setDisplayed(displayed + 5), 1000);
@@ -160,10 +121,10 @@ export default function Home({ stories }: HomeProps) {
           </div>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!stories[selectedLanguage].length && 'No posts found.'}
+          {!stories.length && 'No posts found.'}
           <InfiniteScroll
             dataLength={displayed}
-            hasMore={stories[selectedLanguage].length > displayed}
+            hasMore={stories.length > displayed}
             loader={<h4 className="text-center">Loading...</h4>}
             next={handleDisplayed}
             endMessage={<p className="text-center">{siteMetadata.loadedText[selectedLanguage]}</p>}

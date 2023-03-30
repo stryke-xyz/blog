@@ -11,8 +11,9 @@ export const siteMetadata: any = {
     vi: 'nhật ký trực tuyến',
   },
   description: {
-    en: 'The Official Decentralized Options Exchange (Dopex) Blog',
+    en: 'Dopex Official Blog.',
     zh: '去中心期权交易平台(Dopex)官方博客',
+    vi: 'Blog Chính Thức của Dopex.',
   },
   pagination: {
     previous: {
@@ -48,7 +49,7 @@ export const siteMetadata: any = {
   },
   tagFilter: {
     en: 'Filter By Topic',
-    zh: 'Filter By Topic',
+    zh: '按主題過濾',
     vi: 'Lọc theo chủ đề',
   },
   language: 'en-us',
