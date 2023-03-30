@@ -1,6 +1,7 @@
 export const LANGUAGE_MAPPING: any = {
-  english: 'en',
-  中文: 'zh',
+  en: 'English',
+  zh: '中文',
+  vi: 'Tiếng Việt',
 };
 
 export const POSTS_PER_PAGE = 5;

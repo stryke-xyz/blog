@@ -23,15 +23,16 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params, preview = false }: any) {
-  let slug = (await params.slug) ? params.slug.join('/') : 'home';
+export async function getStaticProps(context: any) {
+  let slug = (await context.params.slug) ? context.params.slug.join('/') : 'home';
 
-  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}`);
+  const { data } = await Storyblok.get(`cdn/stories/articles/${slug}`, {
+    language: context.locale,
+  });
 
   return {
     props: {
       post: (await data) ? data?.story : null,
-      preview,
     },
     revalidate: 60,
   };
