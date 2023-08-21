@@ -7,12 +7,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from 'components/Link';
 import SectionContainer from 'components/SectionContainer';
 import Footer from 'components/Footer';
-import MobileNav from 'components/MobileNav';
 import ThemeSwitch from 'components/ThemeSwitch';
 
 import { LocalizationContext } from 'contexts/Localization';
 
-import headerNavLinks from 'data/headerNavLinks';
 import Logo from 'data/Logo';
 
 import { LANGUAGE_MAPPING } from 'constants/index';
@@ -44,17 +42,6 @@ const LayoutWrapper = ({ children }: any) => {
             </Link>
           </Box>
           <Box className="flex items-center text-base leading-5">
-            <Box className="hidden sm:block">
-              {headerNavLinks[selectedLanguage].map((link: any) => (
-                <Link
-                  key={link.title}
-                  href={link.href}
-                  className="text-lg p-1 font-light text-stieglitz sm:p-4 dark:text-wave-blue hover:text-primary"
-                >
-                  {link.title}
-                </Link>
-              ))}
-            </Box>
             <Select
               id="lang-select"
               name="language-selector"
@@ -71,7 +58,6 @@ const LayoutWrapper = ({ children }: any) => {
               ))}
             </Select>
             <ThemeSwitch />
-            <MobileNav />
           </Box>
         </Box>
         <main className="mb-auto">{children}</main>

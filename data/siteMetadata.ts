@@ -32,11 +32,6 @@ export const siteMetadata: any = {
     zh: '最新',
     vi: 'Muộn nhất',
   },
-  allArticles: {
-    en: 'All Articles',
-    zh: '全部博文',
-    vi: 'Tất cả bài báo',
-  },
   searchPlaceholder: {
     en: 'Search articles',
     zh: '搜索博文',
