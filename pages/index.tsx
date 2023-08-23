@@ -4,15 +4,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import delay from 'lodash/delay';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { ISbStories, ISbStoryData } from 'storyblok-js-client';
+import { ISbStoryData } from 'storyblok-js-client';
 
 import Link from 'components/Link';
 import { PageSEO } from 'components/SEO';
 
 import formatDate from 'lib/utils/formatDate';
 import trimmedSummary from 'lib/utils/trimmedSummary';
-import Storyblok from 'lib/utils/storyblok-service';
 import kebabCase from 'lib/utils/kebabCase';
+import fetchStories from 'lib/utils/fetchStories';
 
 import { siteMetadata } from 'data/siteMetadata';
 
@@ -21,13 +21,12 @@ import { LocalizationContext } from 'contexts/Localization';
 export async function getStaticProps(context: any) {
   const _url_prefix = context.locale === 'en' ? '' : context.locale + '/';
 
-  let data: ISbStories = await Storyblok.get(`cdn/stories/`, {
-    starts_with: `${_url_prefix}articles/`,
-    per_page: 100,
-  });
+  const stories: ISbStoryData[] = (await fetchStories(3, _url_prefix))
+    .map((item: any) => item.stories)
+    .flat();
 
-  const sortedStories = data.data?.stories
-    .map((frontMatter: ISbStoryData) => frontMatter)
+  const sortedStories = stories
+    ?.map((frontMatter: ISbStoryData) => frontMatter)
     .sort(
       (item1: ISbStoryData, item2: ISbStoryData) =>
         new Date(item2.first_published_at!).getTime() -
@@ -36,10 +35,10 @@ export async function getStaticProps(context: any) {
 
   return {
     props: {
-      stories: data.data ? sortedStories : [],
+      stories: stories.length ? sortedStories : [],
       preview: context.preview || [],
       data: {
-        en: data.data,
+        en: sortedStories,
       },
     },
     revalidate: 60,
